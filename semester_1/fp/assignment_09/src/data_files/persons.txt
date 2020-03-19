@@ -1,0 +1,12 @@
+{"uid":"mt43","name":"Mihai Diaconu","phone_number":"0773667214"}
+{"uid":"p40d","name":"George Florea","phone_number":"0779851214"}
+{"uid":"yio9","name":"Ciprian Babes","phone_number":"0354210345"}
+{"uid":"407j","name":"Alex Bucsa","phone_number":"0794675930"}
+{"uid":"56qy","name":"Ciprian Istrati","phone_number":"0778196321"}
+{"uid":"opkb","name":"Maria Istrati","phone_number":"0700357323"}
+{"uid":"4aol","name":"Marinela Iordache","phone_number":"0241224265"}
+{"uid":"anew","name":"Alex Nastase","phone_number":"0772714075"}
+{"uid":"83t0","name":"Alex Puscas","phone_number":"0346379828"}
+{"uid":"1d92","name":"Ionela Istrati","phone_number":"0336939506"}
+{"uid":"rwx4","name":"Test","phone_number":"012344"}
+{"uid":"bn6w","name":"rei","phone_number":"1234567890"}

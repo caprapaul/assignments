@@ -1,0 +1,10 @@
+{"uid":"0bhs","person_uids":"['407j', '4aol']","date":"2020-01-26","time":"23:50:00","description":"Assignment"}
+{"uid":"in1s","person_uids":"['407j', 'p40d', '4aol']","date":"2020-01-24","time":"05:39:00","description":"Assignment"}
+{"uid":"zvdb","person_uids":"['anew']","date":"2019-06-04","time":"10:20:00","description":"Exam"}
+{"uid":"ldce","person_uids":"['p40d', '83t0', 'mt43', 'opkb', '1d92']","date":"2019-02-10","time":"11:07:00","description":"Movie"}
+{"uid":"5cdo","person_uids":"['56qy', 'yio9', '407j', '83t0', 'p40d', 'anew', 'opkb', '4aol']","date":"2019-02-22","time":"10:12:00","description":"Movie"}
+{"uid":"ajmr","person_uids":"['1d92', 'anew', '4aol', 'p40d', 'opkb']","date":"2019-03-07","time":"17:34:00","description":"Assignment"}
+{"uid":"ozrm","person_uids":"['anew', 'opkb', '56qy', '83t0', '407j']","date":"2019-01-03","time":"05:02:00","description":"Movie"}
+{"uid":"godc","person_uids":"['yio9']","date":"2020-01-30","time":"13:34:00","description":"Exam"}
+{"uid":"f6fl","person_uids":"['1d92', '4aol', '83t0', 'opkb', '56qy']","date":"2020-12-12","time":"08:44:00","description":"Movie"}
+{"uid":"c4og","person_uids":"['anew', 'mt43', 'p40d']","date":"2019-12-09","time":"13:18:00","description":"Assignment"}

@@ -1,0 +1,18 @@
+[
+    {
+        "module": "random_computer",
+        "type": "RandomComputer",
+        "is_human": false,
+        "name": "cpu",
+        "symbol": "",
+        "order_id": 1
+    },
+    {
+        "module": "command_player",
+        "type": "CommandPlayer",
+        "is_human": true,
+        "name": "test",
+        "symbol": "",
+        "order_id": 2
+    }
+]

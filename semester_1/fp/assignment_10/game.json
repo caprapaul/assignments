@@ -1,0 +1,41 @@
+{
+    "is_finished": false,
+    "current_player": {
+        "module": "command_player",
+        "type": "CommandPlayer",
+        "is_human": true,
+        "name": "test",
+        "symbol": "",
+        "order_id": 2
+    },
+    "board": {
+        "height": 4,
+        "width": 4,
+        "cells": [
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                -1,
+                -1,
+                0,
+                0
+            ],
+            [
+                1,
+                -1,
+                0,
+                0
+            ]
+        ]
+    }
+}

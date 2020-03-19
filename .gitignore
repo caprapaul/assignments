@@ -5,6 +5,14 @@ venv
 
 ## Visual Studio
 .vs/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

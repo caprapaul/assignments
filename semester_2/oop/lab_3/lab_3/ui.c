@@ -102,6 +102,26 @@ static void list(UI* ui, char arguments[][10], int argumentsCount)
     VectorDestroy(&barricades, BarricadeDestroy);
 }
 
+static void undo(UI* ui, char arguments[][10], int argumentsCount)
+{
+    int undoResultCode = ServiceUndo(ui->service);
+
+    if (undoResultCode != SERVICE_SUCCESS)
+    {
+        printf("No!\n");
+    }
+}
+
+static void redo(UI* ui, char arguments[][10], int argumentsCount)
+{
+    int redoResultCode = ServiceRedo(ui->service);
+
+    if (redoResultCode != SERVICE_SUCCESS)
+    {
+        printf("No!\n");
+    }
+}
+
 static void rawCommandToArguments(char* rawCommand, char commandArguments[][10], int* commandArgumentsCount)
 {
     int index = 0;
@@ -152,6 +172,14 @@ static int processInput(UI* ui, char* inputCommand)
     else if (strcmp(command, "list") == 0)
     {
         list(ui, commandArguments, commandArgumentsCount);
+    }
+    else if (strcmp(command, "undo") == 0)
+    {
+        undo(ui, commandArguments, commandArgumentsCount);
+    }
+    else if (strcmp(command, "redo") == 0)
+    {
+        redo(ui, commandArguments, commandArgumentsCount);
     }
 
     return 0;

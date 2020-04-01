@@ -8,7 +8,7 @@ int BarricadeCreate(Barricade** barricade, int locationCode, char* visibilityInA
 
     if (*barricade == NULL)
     {
-        return -1;
+        return BARRICADE_ERROR;
     }
 
     (*barricade)->locationCode = locationCode;
@@ -16,16 +16,16 @@ int BarricadeCreate(Barricade** barricade, int locationCode, char* visibilityInA
     strcpy((*barricade)->type, type);
     (*barricade)->sturdiness = sturdiness;
 
-    return 0;
+    return BARRICADE_SUCCESS;
 }
 
-int BarricadeCopy(Barricade ** barricade, Barricade * other)
+int BarricadeCopy(Barricade** barricade, Barricade* other)
 {
     *barricade = (Barricade*)malloc(sizeof(Barricade));
 
     if (*barricade == NULL)
     {
-        return -1;
+        return BARRICADE_ERROR;
     }
 
     (*barricade)->locationCode = other->locationCode;
@@ -33,7 +33,7 @@ int BarricadeCopy(Barricade ** barricade, Barricade * other)
     strcpy((*barricade)->type, other->type);
     (*barricade)->sturdiness = other->sturdiness;
 
-    return 0;
+    return BARRICADE_SUCCESS;
 }
 
 int BarricadeDestroy(Barricade** barricade)
@@ -41,20 +41,12 @@ int BarricadeDestroy(Barricade** barricade)
     free(*barricade);
     *barricade = NULL;
 
-    return 0;
+    return BARRICADE_SUCCESS;
 }
 
-int BarricadeCompare(Barricade* barricade, Barricade* other)
+int BarricadeEqual(Barricade* barricade, Barricade* other)
 {
     if (barricade->locationCode == other->locationCode)
-    {
-        return 0;
-    }
-    else if (barricade->locationCode < other->locationCode)
-    {
-        return -1;
-    }
-    else if (barricade->locationCode > other->locationCode)
     {
         return 1;
     }
@@ -62,7 +54,7 @@ int BarricadeCompare(Barricade* barricade, Barricade* other)
     return 0;
 }
 
-int BarricadeCompareType(Barricade* barricade, Barricade* other)
+int BarricadeEqualType(Barricade* barricade, Barricade* other)
 {
     if (strcmp(barricade->type, other->type) == 0)
     {

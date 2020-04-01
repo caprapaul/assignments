@@ -1,0 +1,36 @@
+// pre:
+//      b ∈ B,
+//      nr >= 0, 
+//      elem ∈ TElem
+// post: 
+//      b' ← b + {(elem, nr)}           , if elem !∈ b
+//      pair.second' ← pair.second + nr , otherwise
+//                                      , where pair ∈ b, pair.first = elem
+// throws: an exception if nr is negative
+
+subalgorithm addOccurrences(b, nr, elem) is:
+    if nr < 0 then 
+        throw BagException("Invalid nr: cannot be negative.");
+    end-if
+
+    if b._length >= b._capacity then
+        resizeArray(b._capacity * 2);
+    end-if
+
+    for i ← 0, b._length, 1 execute
+        pair ← b._array[i];
+
+        if pair.first = elem then
+            pair.second ← pair.second + nr;
+            b._array[i] ← pair;
+            b._size ← size + nr;
+
+            @ stop the subalgorithm's execution
+        end-if
+    end-for
+
+    pair ← Pair(elem, nr);
+    b._array[b._length] ← pair;
+    b._length ← b._length + 1;
+    b._size ← b._size + nr;
+end-subalgorithm

@@ -1,9 +1,10 @@
 #include "Bag.h"
 #include <exception>
 
-class BagIteratorException : public std::exception
-{
+class BagIteratorException : public std::exception {
+private:
     const char* _message;
+
 public:
     BagIteratorException(const char* message);
 

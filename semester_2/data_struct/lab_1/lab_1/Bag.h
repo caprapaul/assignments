@@ -1,7 +1,18 @@
 #pragma once
 #include <utility>
+#include <exception>
 //DO NOT INCLUDE BAGITERATOR
 
+class BagException : public std::exception {
+
+private:
+    const char* _message;
+
+public:
+    BagException(const char* message);
+
+    virtual const char* what() const throw();
+};
 
 //DO NOT CHANGE THIS PART
 #define NULL_TELEM -11111;
@@ -11,8 +22,11 @@ class Bag {
 
 private:
     std::pair<TElem, int>* _array;
+    // The number of unique elements.
     int _length;
+    // The total number of elements.
     int _size;
+    // The number of unique elements the bag can hold before resizing.
     int _capacity;
 
     void resizeArray(int newCapacity);
@@ -45,6 +59,10 @@ public:
 
 	//checks if the bag is empty
 	bool isEmpty() const;
+
+    //adds nr occurrences of elem in the Bag.
+    //throws an exception if nr is negative
+    void addOccurrences(int nr, TElem elem);
 
 	//destructor
 	~Bag();

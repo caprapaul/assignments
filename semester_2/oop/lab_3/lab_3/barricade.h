@@ -1,5 +1,8 @@
 #pragma once
 
+#define BARRICADE_SUCCESS 0
+#define BARRICADE_ERROR -1
+
 typedef struct
 {
     int locationCode;
@@ -9,9 +12,9 @@ typedef struct
 } Barricade;
 
 int BarricadeCreate(Barricade** barricade, int locationCode, char* visibilityInArea, char* type, int sturdiness);
-int BarricadeCopy(Barricade** barricade, Barricade* other);
 int BarricadeDestroy(Barricade** barricade);
+int BarricadeCopy(Barricade** barricade, Barricade* other);
 
-int BarricadeCompare(Barricade* barricade, Barricade* other);
-int BarricadeCompareType(Barricade* barricade, Barricade* other);
+int BarricadeEqual(Barricade* barricade, Barricade* other);
+int BarricadeEqualType(Barricade* barricade, Barricade* other);
 int BarricadeCompareSturdiness(Barricade* barricade, Barricade* other);

@@ -18,6 +18,21 @@ static int VectorEnlarge(Vector* vector)
     return VECTOR_SUCCESS;
 }
 
+static int VectorReduce(Vector* vector)
+{
+    int* auxiliary = (int*)realloc(vector->items, sizeof(int) * vector->size / 2);
+
+    if (auxiliary == NULL)
+    {
+        return VECTOR_ERROR;
+    }
+
+    vector->items = auxiliary;
+    vector->size = vector->size / 2;
+
+    return VECTOR_SUCCESS;
+}
+
 int VectorCreate(Vector** vector)
 {
     if (vector == NULL)
@@ -27,7 +42,7 @@ int VectorCreate(Vector** vector)
 
     *vector = (Vector*)malloc(sizeof(Vector));
 
-    if (vector == NULL)
+    if (*vector == NULL)
     {
         return VECTOR_ERROR;
     }
@@ -47,7 +62,7 @@ int VectorCreate(Vector** vector)
     return VECTOR_SUCCESS;
 }
 
-int VectorDestroy(Vector** vector, VectorItemFunction itemDestroyer)
+int VectorDestroy(Vector** vector)
 {
     Vector* temporary = *vector;
 
@@ -56,18 +71,46 @@ int VectorDestroy(Vector** vector, VectorItemFunction itemDestroyer)
         return VECTOR_ERROR;
     }
 
-    if (NULL != itemDestroyer)
-    {
-        for (int i = 0; i < (*vector)->count; i++)
-        {
-            itemDestroyer(&((*vector)->items[i]));
-        }
-    }
-
     free(temporary->items);
     free(temporary);
 
     *vector = NULL;
+
+    return VECTOR_SUCCESS;
+}
+
+int VectorCopy(Vector** vector, Vector* other)
+{
+    if (vector == NULL)
+    {
+        return VECTOR_ERROR;
+    }
+
+    *vector = (Vector*)malloc(sizeof(Vector));
+
+    if (*vector == NULL)
+    {
+        return VECTOR_ERROR;
+    }
+
+    memset((*vector), 0, sizeof(**vector));
+
+    (*vector)->count = 0;
+    (*vector)->size = INITIAL_SIZE;
+    (*vector)->items = malloc(sizeof(void*) * INITIAL_SIZE);
+
+    if ((*vector)->items == NULL)
+    {
+        free(*vector);
+        return VECTOR_ERROR;
+    }
+
+    for (int i = 0; i < VectorGetCount(other); i++)
+    {
+        void* currentElement = NULL;
+        VectorGet(other, i, &currentElement);
+        VectorPush(*vector, currentElement);
+    }
 
     return VECTOR_SUCCESS;
 }
@@ -100,6 +143,11 @@ int VectorPop(Vector* vector, void** item)
         return VECTOR_ERROR;
     }
 
+    if (vector->count <= 0)
+    {
+        return VECTOR_ERROR;
+    }
+
     *item = vector->items[vector->count - 1];
     vector->count--;
 
@@ -113,7 +161,7 @@ int VectorInsert(Vector* vector, int index, void* item)
         return VECTOR_ERROR;
     }
 
-    if (index >= vector->count || index < 0)
+    if (index > vector->count || index < 0)
     {
         return VECTOR_ERROR;
     }
@@ -158,15 +206,7 @@ int VectorRemove(Vector* vector, int index)
 
     if (vector->count < vector->size / 2)
     {
-        int* aux = (int*)realloc(vector->items, sizeof(int) * vector->size / 2);
-
-        if (aux == NULL)
-        {
-            return VECTOR_ERROR;
-        }
-
-        vector->items = aux;
-        vector->size = vector->size / 2;
+        
     }
 
     return VECTOR_SUCCESS;

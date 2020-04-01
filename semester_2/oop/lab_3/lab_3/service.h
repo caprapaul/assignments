@@ -1,9 +1,15 @@
 #pragma once
 #include "repository.h"
 
+#define SERVICE_SUCCESS 0
+#define SERVICE_ERROR -1
+
 typedef struct
 {
     Repository* repository;
+
+    Vector* undo;
+    Vector* redo;
 } Service;
 
 int ServiceCreate(Service** service, Repository* repository);
@@ -16,3 +22,6 @@ int ServiceGetCount(Service* service);
 int ServiceGetAll(Service* service, Vector* barricades);
 int ServiceSearchBarricadeType(Service* service, char* barricadeType, Vector* barricades);
 int ServiceSearchMaximumBarricadeSturdiness(Service* service, int maximumBarricadeSturdiness, Vector* barricades);
+
+int ServiceUndo(Service* service);
+int ServiceRedo(Service* service);

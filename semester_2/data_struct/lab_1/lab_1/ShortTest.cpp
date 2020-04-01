@@ -24,6 +24,9 @@ void testAll() {
 	assert(b.remove(6) == false);
 	assert(b.size() == 6);
 	assert(b.nrOccurrences(1) == 1);
+    b.addOccurrences(8, 1);
+    assert(b.size() == 14);
+    assert(b.nrOccurrences(1) == 9);
 	BagIterator it = b.iterator();
 	it.first();
 	while (it.valid()) {

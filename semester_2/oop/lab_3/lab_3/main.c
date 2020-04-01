@@ -4,24 +4,27 @@
 #include <crtdbg.h>
 #include <stdio.h>
 
-#include "vector_test.h"
+#include "tests.h"
 #include "ui.h"
 
 int main()
 {
     TestVector();
+    TestBarricade();
+    TestRepository();
+    TestService();
 
     Repository* repository = NULL;
     Service* service = NULL;
     UI* ui = NULL;
 
-    RepositoryCreate(&repository, BarricadeCompare, BarricadeCopy);
+    RepositoryCreate(&repository, BarricadeEqual, BarricadeCopy, BarricadeDestroy);
     ServiceCreate(&service, repository);
     UICreate(&ui, service);
 
     UIRun(ui);
 
-    RepositoryDestroy(&repository, BarricadeDestroy);
+    RepositoryDestroy(&repository);
     ServiceDestroy(&service);
     UIDestroy(&ui);
 

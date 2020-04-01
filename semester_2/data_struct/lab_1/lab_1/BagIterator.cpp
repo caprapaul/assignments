@@ -1,4 +1,4 @@
-#include <exception>
+﻿#include <exception>
 #include "BagIterator.h"
 #include "Bag.h"
 
@@ -18,12 +18,13 @@ BagIterator::BagIterator(const Bag& c): _bag(c){
     _currentOccurences = 1;
 }
 
+// Total complexity: Θ(1)
 void BagIterator::first() {
     _currentElement = 0;
     _currentOccurences = 1;
 }
 
-
+// Total complexity: Θ(1)
 void BagIterator::next() {
     if (!valid()) {
         throw  BagIteratorException("Invalid iterator!");
@@ -38,13 +39,12 @@ void BagIterator::next() {
     }
 }
 
-
+// Total complexity: Θ(1)
 bool BagIterator::valid() const {
 	return _currentElement < _bag._length;
 }
 
-
-
+// Total complexity: Θ(1)
 TElem BagIterator::getCurrent() const
 {
     if (!valid()) {

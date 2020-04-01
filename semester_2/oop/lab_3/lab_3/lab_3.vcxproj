@@ -118,7 +118,6 @@
     <ClCompile Include="barricade.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="command.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="repository.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -130,12 +129,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="vector.c" />
-    <ClCompile Include="vector_test.c" />
-    <ClCompile Include="vector_test.h" />
+    <ClCompile Include="tests.c" />
+    <ClCompile Include="tests.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="barricade.h" />
-    <ClInclude Include="command.h" />
     <ClInclude Include="repository.h" />
     <ClInclude Include="service.h" />
     <ClInclude Include="ui.h" />

@@ -1,0 +1,64 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit
+     6                                  import exit msvcrt.dll
+     7                                  
+     8                                  ; 23
+     9                                  ; Being given a string of bytes, build a string of words which contains 
+    10                                  ; in the low bytes of the words the set of distinct characters from the given string 
+    11                                  ; and in the high byte of a word it contains the number of occurrences of the low byte 
+    12                                  ; of the word in the given byte string.
+    13                                  
+    14                                  segment data use32 class=data
+    15 00000000 0204020502020404            s db 2, 4, 2, 5, 2, 2, 4, 4
+    16                                      len equ ($ - s)
+    17 00000008 0000<rept>                  r times (len) dw 0      ; 0402h, 0304h, 0105h
+    18                                      
+    19                                  
+    20                                  segment code use32 class=code
+    21                                      start:
+    22 00000000 BE[00000000]                    mov esi, s
+    23 00000005 FC                              cld
+    24 00000006 B908000000                      mov ecx, len
+    25 0000000B E329                            jecxz program_end   ; end program if len is 0
+    26                                          
+    27                                          loop_1:
+    28 0000000D AC                                  lodsb           ; al = s(i)
+    29 0000000E 88C3                                mov bl, al      ; bl = s(i)
+    30                                              
+    31 00000010 56                                  push esi
+    32                                              
+    33 00000011 BE[08000000]                        mov esi, r
+    34 00000016 BF[08000000]                        mov edi, r
+    35                                              loop_2:
+    36 0000001B 66AD                                    lodsw               ; ax = r(j)
+    37 0000001D 38D8                                    cmp al, bl  
+    38 0000001F 7407                                    je increase_count   ; if r_low(j) == s(i)
+    39 00000021 80FC00                                  cmp ah, 0
+    40 00000024 7508                                    jne next            ; if r_high(j) != 0
+    41                                                  
+    42 00000026 88D8                                    mov al, bl          ; al = s(i)
+    43                                                  
+    44                                                  increase_count:
+    45 00000028 FEC4                                    inc ah
+    46 0000002A 66AB                                    stosw               ; r(j) = count(s(i):s(i)
+    47 0000002C EB05                                    jmp end_loop_2
+    48                                                  
+    49                                                  next:
+    50 0000002E 83C702                                  add edi, 2
+    51 00000031 EBE8                                    jmp loop_2
+    52                                                  
+    53                                              end_loop_2:
+    54                                              
+    55 00000033 5E                                  pop esi
+    56                                              
+    57 00000034 E2D7                            loop loop_1
+    58                                          
+    59                                          
+    60                                          program_end:
+    61                                          
+    62                                          ; exit(0)
+    63 00000036 6A00                            push dword 0
+    64 00000038 FF15[00000000]                  call [exit]

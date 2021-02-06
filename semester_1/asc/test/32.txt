@@ -1,0 +1,11 @@
+Memory: (each line represents one "variable", written like this to follow more easily)
+20 A6, F3 00, 36 00, 0D 00 
+0A CF 1F 23 EF 00 00 00, AE 11 1C 02 E2 05 00 00, A4 F3 02 65 60 00 00 00, 0F B2 CE DE 34 DD 00 00
+19, 63, 01, DC, 78, 03, C3, 90
+78 00 00 00, 78 00 00 00, 68 EA CE 2E, 06 00 00 00, 5A 65 46 00
+69 1A, 50 00, 32 00, 0C 00, 2E F8
+
+EAX = 24 4B 27 45
+EBX = 00 00 03 00
+ECX = 01 80 10 02
+EDX = 12 26 FF 00

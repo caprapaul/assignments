@@ -1,14 +1,12 @@
 #include "LowQualificationService.h"
 
-LowQualificationService::LowQualificationService(Repository<Material>& repository) :
+using namespace std;
+
+LowQualificationService::LowQualificationService(RepositoryText<Material>& repository) :
     repository(repository)
 {
 }
 
-LowQualificationService::LowQualificationService(LowQualificationService const& source) :
-    repository(source.repository)
-{
-}
 
 LowQualificationService::~LowQualificationService()
 {
@@ -28,15 +26,15 @@ Material LowQualificationService::GetNextMaterial(std::string size)
 void LowQualificationService::SaveMaterial(std::string id)
 {
     Material material = this->repository.FindFirst([id](Material material) {return material.Id() == id; });
-    this->savedMaterials.Push(material);
+    this->savedMaterials.push_back(material);
 }
 
-Vector<Material> LowQualificationService::GetSavedMaterials()
+vector<Material> LowQualificationService::GetSavedMaterials()
 {
     return this->savedMaterials;
 }
 
-Vector<Material> LowQualificationService::GetMaterialsWithSizeAndMicrofragmentsQuantity(std::string size, int microfragmentsQuantity)
+vector<Material> LowQualificationService::GetMaterialsWithSizeAndMicrofragmentsQuantity(std::string size, int microfragmentsQuantity)
 {
     return this->repository.FindIf([size, microfragmentsQuantity](Material material) 
         {

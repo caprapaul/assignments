@@ -1,21 +1,14 @@
 #pragma once
 #include "HighQualificationService.h"
 #include "LowQualificationService.h"
-#include "VectorIterator.h"
+#include "Repository.h"
+#include "RepositoryText.h"
+#include "RepositoryMemory.h"
 
 class Tests
 {
-    void testVector();
-    void VectorPush_ValidInput_PushedToVector();
-    void VectorPop_NonEmptyVector_PoppedFromVector();
-    void VectorAccess_ValidInput_ModifiedItem();
-    void VectorInsert_ValidInput_InsertedToVector();
-    void VectorRemove_ValidInput_RemovedFromVector();
-
-    void testVectorIterator();
-    void VectorIteratorCurrent_ValidIterator_ReturnCurrentElement();
-    void VectorIteratorCurrent_InvalidIterator_RaiseException();
-    void VectorIteratorNext_InvalidIterator_RaiseException();
+    void testMaterial();
+    void Material_NoInput_MaterialCreated();
 
     void testRepository();
     void RepositoryAdd_ValidInput_AddedToRepository();
@@ -32,6 +25,7 @@ class Tests
     void HighQualificationServiceAddMaterial_ExistingMaterial_ExceptionThrown();
     void HighQualificationServiceRemoveMaterial_ExistingMaterial_RemovedMaterial();
     void HighQualificationServiceUpdateMaterial_ExistingMaterial_UpdatedMaterial();
+    void HighQualificationServiceUpdateMaterial_NonExistingMaterial_RaiseException();
 
     void testLowQualificationService();
     void LowQualificationServiceGetNextMaterial_NoArgument_ReturnNextMaterial();

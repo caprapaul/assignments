@@ -1,0 +1,165 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit, fopen, fread, fprintf, fclose, printf, scanf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fread msvcrt.dll
+     9                                  import fprintf msvcrt.dll
+    10                                  import fclose msvcrt.dll  
+    11                                  import printf msvcrt.dll
+    12                                  import scanf msvcrt.dll
+    13                                  
+    14                                  segment data use32 class=data
+    15 00000000 633D2000                    message_c db "c= ", 0
+    16 00000004 6E3D2000                    message_n db "n= ", 0
+    17 00000008 696E3D2000                  message_in db "in= ", 0
+    18                                      
+    19 0000000D 256300                      format_c db "%c", 0
+    20 00000010 256400                      format_n db "%d", 0
+    21 00000013 257300                      format_s db "%s", 0
+    22                                      
+    23 00000016 <res 00000020>              in_f_name resb 32
+    24 00000036 FFFFFFFF                    in_f_descriptor dd -1
+    25 0000003A 7200                        in_f_access db "r", 0
+    26                                      
+    27 0000003C 6F75742E74787400            out_f_name db "out.txt", 0
+    28 00000044 FFFFFFFF                    out_f_descriptor dd -1
+    29 00000048 7700                        out_f_access db "w", 0
+    30                                      
+    31 0000004A 00                          c db 0
+    32 0000004B 00                          n db 0
+    33 0000004C <res 00000064>              text resb 100
+    34 000000B0 00                          len db 0
+    35 000000B1 00                          counter db 0
+    36                                      
+    37                                  
+    38                                  segment code use32 class=code
+    39                                      start:
+    40                                          ; A character c, a number n (n<20) and the name of the input file 
+    41                                          ; are read from the keyboard. Write the content of the input file 
+    42                                          ; in other file, but replace the bytes from the positions that are 
+    43                                          ; multiple of n with the character c.
+    44                                          
+    45                                          ; printf(message_c)
+    46 00000000 68[00000000]                    push dword message_c
+    47 00000005 FF15[00000000]                  call [printf]
+    48 0000000B 83C404                          add esp, 4 * 1
+    49                                          
+    50                                          ; scanf(format_c, c)
+    51 0000000E 68[4A000000]                    push dword c
+    52 00000013 68[0D000000]                    push dword format_c
+    53 00000018 FF15[00000000]                  call [scanf]
+    54 0000001E 83C408                          add esp, 4 * 2
+    55                                          
+    56                                          
+    57                                          ; printf(message_n)
+    58 00000021 68[04000000]                    push dword message_n
+    59 00000026 FF15[00000000]                  call [printf]
+    60 0000002C 83C404                          add esp, 4 * 1
+    61                                          
+    62                                          ; scanf(format_n, n)
+    63 0000002F 68[4B000000]                    push dword n
+    64 00000034 68[10000000]                    push dword format_n
+    65 00000039 FF15[00000000]                  call [scanf]
+    66 0000003F 83C408                          add esp, 4 * 2
+    67                                          
+    68                                          
+    69                                          ; printf(message_in)
+    70 00000042 68[08000000]                    push dword message_in
+    71 00000047 FF15[00000000]                  call [printf]
+    72 0000004D 83C404                          add esp, 4 * 1
+    73                                          
+    74                                          ; scanf(format_s, in_f_name)
+    75 00000050 68[16000000]                    push dword in_f_name
+    76 00000055 68[13000000]                    push dword format_s
+    77 0000005A FF15[00000000]                  call [scanf]
+    78 00000060 83C408                          add esp, 4 * 2
+    79                                          
+    80                                          
+    81                                          ; fopen(in_f_name, in_f_access)
+    82 00000063 68[3A000000]                    push dword in_f_access     
+    83 00000068 68[16000000]                    push dword in_f_name
+    84 0000006D FF15[00000000]                  call [fopen]
+    85 00000073 83C408                          add esp, 4 * 2
+    86                                          
+    87 00000076 83F800                          cmp eax, 0
+    88 00000079 0F84BA000000                    je program_end
+    89 0000007F A3[36000000]                    mov [in_f_descriptor], eax
+    90                                          
+    91                                          
+    92                                          ; fopen(out_f_name, out_f_access)
+    93 00000084 68[48000000]                    push dword out_f_access     
+    94 00000089 68[3C000000]                    push dword out_f_name
+    95 0000008E FF15[00000000]                  call [fopen]
+    96 00000094 83C408                          add esp, 4 * 2
+    97                                          
+    98 00000097 83F800                          cmp eax, 0
+    99 0000009A 0F848A000000                    je close_in
+   100 000000A0 A3[44000000]                    mov [out_f_descriptor], eax
+   101                                          
+   102                                          
+   103                                          ;fread(text, 1, 100, in_f_descriptor)
+   104 000000A5 FF35[36000000]                  push dword [in_f_descriptor]
+   105 000000AB 6A64                            push dword 100
+   106 000000AD 6A01                            push dword 1
+   107 000000AF 68[4C000000]                    push dword text
+   108 000000B4 FF15[00000000]                  call [fread]
+   109 000000BA 83C410                          add esp, 4 * 4
+   110                                          
+   111 000000BD A3[B0000000]                    mov [len], eax
+   112 000000C2 8B0D[B0000000]                  mov ecx, [len]
+   113 000000C8 E351                            jecxz close_out ; stop program if there's no text
+   114                                          
+   115 000000CA BE[4C000000]                    mov esi, text
+   116 000000CF BF[4C000000]                    mov edi, text
+   117 000000D4 FC                              cld
+   118                                          
+   119                                          loop_1:
+   120 000000D5 AC                                  lodsb   ; al = text(i)
+   121                                              ; if counter is 0, the current position is a multiple of n
+   122 000000D6 803D[B1000000]00                    cmp [counter], byte 0
+   123 000000DD 7505                                jne next
+   124                                              
+   125                                              ; replace current character with the character from c
+   126 000000DF A0[4A000000]                        mov al, [c]
+   127                                              
+   128                                              next:
+   129 000000E4 AA                                  stosb   ; text(i) = al
+   130 000000E5 FE05[B1000000]                      inc byte [counter]
+   131                                              ; check if counter is equal to n, that means the next position is a multiple of n
+   132                                              ; so we set counter to 0, otherwise we skip to the next loop step
+   133 000000EB 8A1D[4B000000]                      mov bl, [n]
+   134 000000F1 3A1D[B1000000]                      cmp bl, [counter]
+   135 000000F7 7507                                jne next_end
+   136                                              
+   137 000000F9 C605[B1000000]00                    mov [counter], byte 0   ; counter = 0
+   138                                              
+   139                                          next_end:
+   140 00000100 E2D3                            loop loop_1
+   141                                              
+   142                                          
+   143                                          ;fprintf(out_f_descriptor, format_s, text)
+   144 00000102 68[4C000000]                    push dword text
+   145 00000107 68[13000000]                    push dword format_s
+   146 0000010C FF35[44000000]                  push dword [out_f_descriptor]
+   147 00000112 FF15[00000000]                  call [fprintf]
+   148 00000118 83C40C                          add esp, 4 * 3
+   149                                          
+   150                                          close_out:
+   151                                          ; fclose(out_f_descriptor)
+   152 0000011B FF35[44000000]                  push dword [out_f_descriptor]
+   153 00000121 FF15[00000000]                  call [fclose]
+   154 00000127 83C404                          add esp, 4 * 1
+   155                                          
+   156                                          close_in:
+   157                                          ; fclose(in_f_descriptor)
+   158 0000012A FF35[36000000]                  push dword [in_f_descriptor]
+   159 00000130 FF15[00000000]                  call [fclose]
+   160 00000136 83C404                          add esp, 4 * 1
+   161                                          
+   162                                          program_end:
+   163                                          ; exit(0)
+   164 00000139 6A00                            push dword 0
+   165 0000013B FF15[00000000]                  call [exit]

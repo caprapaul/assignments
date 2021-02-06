@@ -1,0 +1,1 @@
+scp -r ./lab_02/Program.cs unknown@192.168.100.95:/home/unknown/server/Program.cs

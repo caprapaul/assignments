@@ -1,0 +1,5 @@
+SomeStar1,Constellation1,10,20,1000
+SomeStar2,Constellation2,1210,23330,14000
+OtherStar3,Constellation1,6610,203,15430
+AStar4,Constellation1,11340,2900,1220
+SomeStar2213,Constellation2,1210,23330,14000

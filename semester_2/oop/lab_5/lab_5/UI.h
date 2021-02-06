@@ -11,15 +11,17 @@ private:
     LowQualificationService& lowQualificationService;
 
     std::string serviceMode;
+    std::string filePath;
 
-    void mode(Vector<std::string> arguments);
-    void add(Vector<std::string> arguments);
-    void update(Vector<std::string> arguments);
-    void remove(Vector<std::string> arguments);
-    void list(Vector<std::string> arguments);
-    void next(Vector<std::string> arguments);
-    void save(Vector<std::string> arguments);
-    void mylist(Vector<std::string> arguments);
+    void mode(std::vector<std::string> arguments);
+    void add(std::vector<std::string> arguments);
+    void update(std::vector<std::string> arguments);
+    void remove(std::vector<std::string> arguments);
+    void list(std::vector<std::string> arguments);
+    void next(std::vector<std::string> arguments);
+    void save(std::vector<std::string> arguments);
+    void mylist(std::vector<std::string> arguments);
+    void fileLocation(std::vector<std::string> arguments);
 
     bool processInput(std::string input);
 

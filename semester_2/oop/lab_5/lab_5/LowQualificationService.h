@@ -1,22 +1,21 @@
 #pragma once
 
 #include "Material.h"
-#include "Repository.h"
+#include "RepositoryText.h"
 
 class LowQualificationService
 {
-    Repository<Material>& repository;
-    Vector<Material> savedMaterials;
+    RepositoryText<Material>& repository;
+    std::vector<Material> savedMaterials;
 
 public:
-    LowQualificationService(Repository<Material>& repository);
-    LowQualificationService(LowQualificationService const& source);
+    LowQualificationService(RepositoryText<Material>& repository);
     ~LowQualificationService();
 
     Material GetNextMaterial();
     Material GetNextMaterial(std::string size);
     void SaveMaterial(std::string id);
-    Vector<Material> GetSavedMaterials();
-    Vector<Material> GetMaterialsWithSizeAndMicrofragmentsQuantity(std::string size, int microfragmentsQuantity);
+    std::vector<Material> GetSavedMaterials();
+    std::vector<Material> GetMaterialsWithSizeAndMicrofragmentsQuantity(std::string size, int microfragmentsQuantity);
 };
 

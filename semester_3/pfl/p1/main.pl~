@@ -1,0 +1,12 @@
+lcm(A, B, R):- (0 is R mod A), (0 is R mod B),
+    R is 0, !.
+lcm(A, B, R):-
+    lcm(A, B, R1),
+    R is R1 + 1.
+
+start :-
+    X = 1,
+    lcm(2, 3, X),
+    print(X).
+
+start.

@@ -1,0 +1,4 @@
+repositoryType=file
+fileLocation=test.html
+saveRepositoryType=file
+saveFileLocation=test_save.html

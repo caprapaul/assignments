@@ -11,10 +11,10 @@ int main()
     Tests tests;
     tests.RunAll();
 
-    //Repository<Material> repository;
-    //HighQualificationService highQualificationService(repository);
-    //LowQualificationService lowQualificationService(repository);
-    //UI ui(highQualificationService, lowQualificationService);
+    RepositoryText<Material> repository;
+    HighQualificationService highQualificationService(repository);
+    LowQualificationService lowQualificationService(repository);
+    UI ui(highQualificationService, lowQualificationService);
 
     //ui.Run();
 }

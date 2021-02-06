@@ -1,0 +1,10 @@
+fileLocation D:\Assignments\semester_2\oop\lab_9\lab_9\test_run.txt
+mylistLocation D:\Assignments\semester_2\oop\lab_9\lab_9\test_run.csv
+mylistLocation D:\Assignments\semester_2\oop\lab_9\lab_9\test_run.html
+mode A
+add abc, 1X2X3, 2000, 1000, ghi
+add def, 4X5X6, 2000, 1000, ghi
+mode B
+save abc
+save def
+mylist

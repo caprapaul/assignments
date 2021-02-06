@@ -1,0 +1,21 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit
+     6                                  import exit msvcrt.dll    
+     7                                  
+     8                                  segment data use32 class=data
+     9 00000000 0000                        r dw 0
+    10                                  
+    11                                  segment code use32 class=code
+    12                                      start:
+    13                                          ; -2*5
+    14 00000000 B0FE                            mov al, -2  ; al = -2
+    15 00000002 B305                            mov bl, 5   ; bl = 5
+    16 00000004 F6E3                            mul bl      ; ax = -2 * 5
+    17 00000006 66A3[00000000]                  mov [r], ax ; r = -2 * 5
+    18                                          
+    19                                          ; exit(0)
+    20 0000000C 6A00                            push dword 0
+    21 0000000E FF15[00000000]                  call [exit]

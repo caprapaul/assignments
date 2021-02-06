@@ -2,24 +2,20 @@
 
 using namespace std;
 
-HighQualificationService::HighQualificationService(Repository<Material>& repository): 
+HighQualificationService::HighQualificationService(RepositoryText<Material>& repository): 
     repository(repository)
 {
 }
 
-HighQualificationService::HighQualificationService(HighQualificationService const& source): 
-    repository(source.repository)
-{
-}
 
 HighQualificationService::~HighQualificationService()
 {
 }
 
-void HighQualificationService::AddMaterial(std::string id, std::string size, float infectionLevel, int microfragmentsQuantity, std::string photograph)
+void HighQualificationService::AddMaterial(string id, string size, float infectionLevel, int microfragmentsQuantity, string photograph)
 {
-    Vector<Material> materialsWithId = repository.FindIf([&](Material material) { return material.Id() == id; });
-    if (materialsWithId.Size() != 0)
+    vector<Material> materialsWithId = repository.FindIf([&](Material material) { return material.Id() == id; });
+    if (materialsWithId.size() != 0)
     {
         throw HighQualificationServiceException("Id already exists.");
     }
@@ -28,10 +24,10 @@ void HighQualificationService::AddMaterial(std::string id, std::string size, flo
     repository.Add(material);
 }
 
-void HighQualificationService::UpdateMaterial(std::string id, std::string newSize, float newInfectionLevel, int newMicrofragmentsQuantity, std::string newPhotograph)
+void HighQualificationService::UpdateMaterial(string id, string newSize, float newInfectionLevel, int newMicrofragmentsQuantity, string newPhotograph)
 {
-    Vector<Material> materialsWithId = repository.FindIf([&](Material material) { return material.Id() == id; });
-    if (materialsWithId.Size() == 0)
+    vector<Material> materialsWithId = repository.FindIf([&](Material material) { return material.Id() == id; });
+    if (materialsWithId.size() == 0)
     {
         throw HighQualificationServiceException("Material with given id does not exist.");
     }
@@ -40,14 +36,19 @@ void HighQualificationService::UpdateMaterial(std::string id, std::string newSiz
     this->repository.UpdateFirst([&](Material material) { return material.Id() == id; }, newMaterial);
 }
 
-void HighQualificationService::RemoveMaterial(std::string id)
+void HighQualificationService::RemoveMaterial(string id)
 {
     this->repository.RemoveFirst([id](Material material) { return material.Id() == id; });
 }
 
-Vector<Material> HighQualificationService::GetMaterials()
+vector<Material> HighQualificationService::GetMaterials()
 {
     return repository.GetAll();
+}
+
+void HighQualificationService::SetFile(std::string filePath)
+{
+    this->repository.SetFile(filePath);
 }
 
 

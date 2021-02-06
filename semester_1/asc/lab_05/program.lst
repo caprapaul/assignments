@@ -1,0 +1,38 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit
+     6                                  import exit msvcrt.dll    
+     7                                  
+     8                                  segment data use32 class=data
+     9 00000000 01020304                    s db 1, 2, 3, 4
+    10                                      l equ ($ - s)
+    11 00000004 0000<rept>                  d times (l - 1) dw 0
+    12                                  
+    13                                  segment code use32 class=code
+    14                                      start:
+    15                                          ; Given a byte string S of length l, obtain the string D of length l-1 as
+    16                                          ; D(i) = S(i) * S(i+1) 
+    17                                          ; (each element of D is the product of two consecutive elements of S). 
+    18                                          
+    19 00000000 B903000000                      mov ecx, l - 1
+    20                                          
+    21 00000005 83F9FF                          cmp ecx, -1
+    22 00000008 741E                            je program_end      ; end program if l is 0
+    23 0000000A BE00000000                      mov esi, 0
+    24 0000000F E317                            jecxz program_end   ; end program if l is 1
+    25                                          
+    26                                          loop_1:
+    27 00000011 8A86[00000000]                      mov al, [s + esi]       ; al = s(i)
+    28 00000017 F6A6[01000000]                      mul byte [s + esi + 1]  ; ax = s(i) * s(i+1)
+    29 0000001D 66898436[04000000]                  mov [d + esi * 2], ax   ; d(i) = s(i) * s(i+1)
+    30                                              
+    31 00000025 46                                  inc esi
+    32 00000026 E2E9                            loop loop_1
+    33                                          
+    34                                          program_end:
+    35                                          
+    36                                          ; exit(0)
+    37 00000028 6A00                            push dword 0
+    38 0000002A FF15[00000000]                  call [exit]

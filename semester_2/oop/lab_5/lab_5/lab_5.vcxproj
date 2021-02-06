@@ -119,10 +119,10 @@
     <ClInclude Include="LowQualificationService.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Repository.h" />
+    <ClInclude Include="RepositoryMemory.h" />
+    <ClInclude Include="RepositoryText.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="UI.h" />
-    <ClInclude Include="Vector.h" />
-    <ClInclude Include="VectorIterator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -130,10 +130,10 @@
     <ClCompile Include="LowQualificationService.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Repository.cpp" />
+    <ClCompile Include="RepositoryMemory.cpp" />
+    <ClCompile Include="RepositoryText.cpp" />
     <ClCompile Include="Tests.cpp" />
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Vector.cpp" />
-    <ClCompile Include="VectorIterator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

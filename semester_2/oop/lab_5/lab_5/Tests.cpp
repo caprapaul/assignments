@@ -4,121 +4,20 @@
 
 using namespace std;
 
-void Tests::testVector()
+void Tests::testMaterial()
 {
-    VectorPush_ValidInput_PushedToVector();
-    VectorPop_NonEmptyVector_PoppedFromVector();
-    VectorAccess_ValidInput_ModifiedItem();
-    VectorInsert_ValidInput_InsertedToVector();
-    VectorRemove_ValidInput_RemovedFromVector();
+    Material_NoInput_MaterialCreated();
 }
 
-void Tests::VectorPush_ValidInput_PushedToVector()
+void Tests::Material_NoInput_MaterialCreated()
 {
-    Vector<int> vector;
+    Material material;
 
-    vector.Push(10);
-
-    assert(vector.Size() == 1);
-}
-
-void Tests::VectorPop_NonEmptyVector_PoppedFromVector()
-{
-    Vector<int> vector;
-
-    vector.Push(10);
-    int popped = vector.Pop();
-
-    assert(vector.Size() == 0);
-    assert(popped = 10);
-}
-
-void Tests::VectorAccess_ValidInput_ModifiedItem()
-{
-    Vector<int> vector;
-
-    vector.Push(10);
-    vector.Push(20);
-    int first = vector[0];
-
-    assert(first == 10);
-}
-
-void Tests::VectorInsert_ValidInput_InsertedToVector()
-{
-    Vector<int> vector;
-
-    vector.Push(20);
-    vector.Insert(0, 10);
-    int first = vector[0];
-
-    assert(vector.Size() == 2);
-    assert(first == 10);
-}
-
-void Tests::VectorRemove_ValidInput_RemovedFromVector()
-{
-    Vector<int> vector;
-
-    vector.Push(20);
-    vector.Push(10);
-    vector.Remove(0);
-    int first = vector[0];
-
-    assert(vector.Size() == 1);
-    assert(first == 10);
-}
-
-void Tests::testVectorIterator()
-{
-    VectorIteratorCurrent_ValidIterator_ReturnCurrentElement();
-    VectorIteratorNext_InvalidIterator_RaiseException();
-    VectorIteratorCurrent_InvalidIterator_RaiseException();
-}
-
-void Tests::VectorIteratorCurrent_ValidIterator_ReturnCurrentElement()
-{
-    Vector<int> vector;
-    VectorIterator<int> iterator = vector.Iterator();
-    vector.Push(10);
-    iterator.First();
-
-    assert(iterator.Current() == 10);
-}
-
-void Tests::VectorIteratorCurrent_InvalidIterator_RaiseException()
-{
-    Vector<int> vector;
-    VectorIterator<int> iterator = vector.Iterator();
-
-    try
-    {
-        iterator.Current();
-        assert(false);
-    }
-    catch (exception& exception)
-    {
-        exception.what();
-        assert(true);
-    }
-
-}
-
-void Tests::VectorIteratorNext_InvalidIterator_RaiseException()
-{
-    Vector<int> vector;
-    VectorIterator<int> iterator = vector.Iterator();
-
-    try
-    {
-        iterator.Next();
-        assert(false);
-    }
-    catch (exception& exception)
-    {
-        exception.what();
-        assert(true);
-    }
+    assert(material.Id() == "");
+    assert(material.Size() == "0X0X0");
+    assert(material.InfectionLevel() == 0.0);
+    assert(material.MicrofragmentsQuantity() == 0);
+    assert(material.Photograph() == "");
 }
 
 void Tests::testRepository()
@@ -135,41 +34,55 @@ void Tests::testRepository()
 
 void Tests::RepositoryAdd_ValidInput_AddedToRepository()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(10);
-    Vector<int> elements = repository.GetAll();
+    vector<int> elements = repository.GetAll();
 
-    assert(elements.Size() == 1);
+    assert(elements.size() == 1);
+
+    repository.Clear();
 }
 
 void Tests::RepositoryRemoveIf_MultipleExistingElements_RemovedFromRepository()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(10);
     repository.Add(20);
     repository.Add(10);
     repository.RemoveIf([&](int element) { return element == 10; });
 
-    assert(repository.GetAll().Size() == 1);
+    assert(repository.GetAll().size() == 1);
 }
 
 void Tests::RepositoryFindIf_ExistingElement_FoundInRepository()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(10);
     repository.Add(20);
     repository.Add(10);
-    Vector<int> found = repository.FindIf([&](int element) { return element == 10; });
+    vector<int> found = repository.FindIf([&](int element) { return element == 10; });
 
-    assert(found.Size() == 2);
+    assert(found.size() == 2);
 }
 
 void Tests::RepositoryFindFirst_NonExistingElement_RaiseException()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(20);
     
@@ -186,32 +99,41 @@ void Tests::RepositoryFindFirst_NonExistingElement_RaiseException()
 
 void Tests::RepositoryRemoveFirst_MultipleExistingElements_RemovedFirstFromRepository()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(10);
     repository.Add(20);
     repository.Add(10);
     repository.RemoveFirst([&](int element) { return element == 10; });
 
-    assert(repository.GetAll().Size() == 2);
+    assert(repository.GetAll().size() == 2);
 }
 
 void Tests::RepositoryUpdateFirst_MultipleExistingElements_UpdatedFirstFromRepository()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(10);
     repository.Add(20);
     repository.Add(10);
     repository.UpdateFirst([&](int element) { return element == 10; }, 20);
-    Vector<int> found = repository.FindIf([&](int element) { return element == 10; });
+    vector<int> found = repository.FindIf([&](int element) { return element == 10; });
 
-    assert(found.Size() == 1);
+    assert(found.size() == 1);
 }
 
 void Tests::RepositoryGetNext_LoopElements_ReturnFirst()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(10);
     repository.GetNext([](int element) { return true; });
@@ -222,7 +144,10 @@ void Tests::RepositoryGetNext_LoopElements_ReturnFirst()
 
 void Tests::RepositoryGetNext_NoElementFound_RaiseException()
 {
-    Repository<int> repository;
+    RepositoryText<int> repository;
+
+    repository.SetFile("test.txt");
+    repository.Clear();
 
     repository.Add(10);
 
@@ -244,23 +169,30 @@ void Tests::testHighQualificationService()
     HighQualificationServiceAddMaterial_ExistingMaterial_ExceptionThrown();
     HighQualificationServiceRemoveMaterial_ExistingMaterial_RemovedMaterial();
     HighQualificationServiceUpdateMaterial_ExistingMaterial_UpdatedMaterial();
+    HighQualificationServiceUpdateMaterial_NonExistingMaterial_RaiseException();
 }
 
 void Tests::HighQualificationServiceAddMaterial_ValidInput_AddedMaterial()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService service(repository);
 
-    service.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
-    Vector<Material> materials = service.GetMaterials();
+    service.SetFile("test.txt");
+    repository.Clear();
 
-    assert(materials.Size() == 1);
+    service.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
+    vector<Material> materials = service.GetMaterials();
+
+    assert(materials.size() == 1);
 }
 
 void Tests::HighQualificationServiceAddMaterial_ExistingMaterial_ExceptionThrown()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService service(repository);
+
+    service.SetFile("test.txt");
+    repository.Clear();
 
     service.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
     try
@@ -273,36 +205,64 @@ void Tests::HighQualificationServiceAddMaterial_ExistingMaterial_ExceptionThrown
         exception.what();
         assert(true);
     }
-    Vector<Material> materials = service.GetMaterials();
+    vector<Material> materials = service.GetMaterials();
 
-    assert(materials.Size() == 1);
+    assert(materials.size() == 1);
 }
 
 void Tests::HighQualificationServiceRemoveMaterial_ExistingMaterial_RemovedMaterial()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService service(repository);
+
+    service.SetFile("test.txt");
+    repository.Clear();
 
     service.AddMaterial(string("test2"), "1X2X3", 1.0, 1, "test2.png");
     service.AddMaterial(string("test"), "1X2X3", 1.0, 1, "test.png");
     service.RemoveMaterial(string("test"));
-    Vector<Material> materials = service.GetMaterials();
+    vector<Material> materials = service.GetMaterials();
 
-    assert(materials.Size() == 1);
+    assert(materials.size() == 1);
 }
 
 void Tests::HighQualificationServiceUpdateMaterial_ExistingMaterial_UpdatedMaterial()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService service(repository);
+
+    service.SetFile("test.txt");
+    repository.Clear();
 
     service.AddMaterial("test2", "1X2X3", 1.0, 1, "test.png");
     service.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
     service.UpdateMaterial("test", "1X2X3", 1.0, 3, "test2.png");
-    Vector<Material> materials = service.GetMaterials();
+    vector<Material> materials = service.GetMaterials();
     Material updated = materials[1];
 
     assert(updated.MicrofragmentsQuantity() == 3);
+}
+
+void Tests::HighQualificationServiceUpdateMaterial_NonExistingMaterial_RaiseException()
+{
+    RepositoryText<Material> repository;
+    HighQualificationService service(repository);
+
+    service.SetFile("test.txt");
+    repository.Clear();
+
+    service.AddMaterial("test2", "1X2X3", 1.0, 1, "test.png");
+
+    try 
+    {
+        service.UpdateMaterial("test", "1X2X3", 1.0, 3, "test2.png");
+        assert(false);
+    }
+    catch (exception& exception)
+    {
+        exception.what();
+        assert(true);
+    }
 }
 
 void Tests::testLowQualificationService()
@@ -315,9 +275,12 @@ void Tests::testLowQualificationService()
 
 void Tests::LowQualificationServiceGetNextMaterial_NoArgument_ReturnNextMaterial()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService highService(repository);
     LowQualificationService lowService(repository);
+
+    highService.SetFile("test.txt");
+    repository.Clear();
 
     highService.AddMaterial("test2", "1X2X3", 1.0, 1, "test.png");
     highService.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
@@ -335,9 +298,12 @@ void Tests::LowQualificationServiceGetNextMaterial_NoArgument_ReturnNextMaterial
 
 void Tests::LowQualificationServiceGetNextMaterial_SizeArgument_ReturnNextMaterial()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService highService(repository);
     LowQualificationService lowService(repository);
+
+    highService.SetFile("test.txt");
+    repository.Clear();
 
     highService.AddMaterial("test2", "2X2X2", 1.0, 1, "test.png");
     highService.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
@@ -348,41 +314,46 @@ void Tests::LowQualificationServiceGetNextMaterial_SizeArgument_ReturnNextMateri
 
 void Tests::LowQualificationServiceSaveMaterial_NonEmptySavedList_SavedMaterial()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService highService(repository);
     LowQualificationService lowService(repository);
+
+    highService.SetFile("test.txt");
+    repository.Clear();
 
     highService.AddMaterial("test2", "2X2X2", 1.0, 1, "test.png");
     highService.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
 
     lowService.SaveMaterial("test");
-    Vector<Material> savedMaterials = lowService.GetSavedMaterials();
+    vector<Material> savedMaterials = lowService.GetSavedMaterials();
 
-    assert(savedMaterials.Size() == 1);
+    assert(savedMaterials.size() == 1);
     assert(savedMaterials[0].Id() == "test");
 }
 
 void Tests::LowQualificationServiceGetMaterialsWithSizeAndMicrofragmentsQuantity_OneMaterialMatchesCondition_ReturnMatchingMaterial()
 {
-    Repository<Material> repository;
+    RepositoryText<Material> repository;
     HighQualificationService highService(repository);
     LowQualificationService lowService(repository);
+
+    highService.SetFile("test.txt");
+    repository.Clear();
 
     highService.AddMaterial("test", "1X2X3", 1.0, 1, "test.png");
     highService.AddMaterial("test2", "2X2X2", 1.0, 15, "test.png");
     highService.AddMaterial("test3", "2X2X2", 1.0, 5, "test.png");
     highService.AddMaterial("test4", "1X2X3", 1.0, 11, "test.png");
 
-    Vector<Material> foundMaterials = lowService.GetMaterialsWithSizeAndMicrofragmentsQuantity("2X2X2", 10);
+    vector<Material> foundMaterials = lowService.GetMaterialsWithSizeAndMicrofragmentsQuantity("2X2X2", 10);
 
-    assert(foundMaterials.Size() == 1);
+    assert(foundMaterials.size() == 1);
     assert(foundMaterials[0].Id() == "test2");
 }
 
 void Tests::RunAll()
 {
-    testVector();
-    testVectorIterator();
+    testMaterial();
     testRepository();
     testHighQualificationService();
     testLowQualificationService();

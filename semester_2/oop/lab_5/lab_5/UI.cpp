@@ -1,15 +1,14 @@
 #include "UI.h"
 #include <iostream>
-#include "Vector.h"
 
 using namespace std;
 
-void UI::mode(Vector<string> arguments)
+void UI::mode(vector<string> arguments)
 {
     this->serviceMode = arguments[1];
 }
 
-void UI::add(Vector<string> arguments)
+void UI::add(vector<string> arguments)
 {
     if (this->serviceMode == "A")
     {
@@ -44,7 +43,7 @@ void UI::add(Vector<string> arguments)
     }
 }
 
-void UI::update(Vector<string> arguments)
+void UI::update(vector<string> arguments)
 {
     if (this->serviceMode == "A")
     {
@@ -79,7 +78,7 @@ void UI::update(Vector<string> arguments)
     }
 }
 
-void UI::remove(Vector<string> arguments)
+void UI::remove(vector<string> arguments)
 {
     if (this->serviceMode == "A")
     {
@@ -88,22 +87,21 @@ void UI::remove(Vector<string> arguments)
     }
 }
 
-void UI::list(Vector<string> arguments)
+void UI::list(vector<string> arguments)
 {
     if (this->serviceMode == "A")
     {
-        Vector<Material> materials = this->highQualificationService.GetMaterials();
+        vector<Material> materials = this->highQualificationService.GetMaterials();
 
-        for (int i = 0; i < materials.Size(); i++)
+        for (auto currentMaterial : materials)
         {
-            Material currentMaterial = materials[i];
-            cout << currentMaterial.Id() << " " << currentMaterial.Size() << " " << currentMaterial.InfectionLevel() << " " << currentMaterial.MicrofragmentsQuantity() << " " << currentMaterial.Photograph() << endl;
+            cout << currentMaterial << endl;
         }
     }
 
     if (this->serviceMode == "B")
     {
-        if (arguments.Size() < 3)
+        if (arguments.size() < 3)
         {
             return;
         }
@@ -121,26 +119,26 @@ void UI::list(Vector<string> arguments)
             return;
         }
 
-        Vector<Material> materials = this->lowQualificationService.GetMaterialsWithSizeAndMicrofragmentsQuantity(size, microfragmentsQuantity);
+        vector<Material> materials = this->lowQualificationService.GetMaterialsWithSizeAndMicrofragmentsQuantity(size, microfragmentsQuantity);
 
-        for (int i = 0; i < materials.Size(); i++)
+        for (int i = 0; i < materials.size(); i++)
         {
             Material currentMaterial = materials[i];
-            cout << currentMaterial.Id() << " " << currentMaterial.Size() << " " << currentMaterial.InfectionLevel() << " " << currentMaterial.MicrofragmentsQuantity() << " " << currentMaterial.Photograph() << endl;
+            cout << currentMaterial << endl;
         }
     }
 }
 
-void UI::next(Vector<std::string> arguments)
+void UI::next(vector<string> arguments)
 {
     if (this->serviceMode == "B")
     {
         Material material;
-        if (arguments.Size() == 1)
+        if (arguments.size() == 1)
         {
             material = this->lowQualificationService.GetNextMaterial();
         }
-        else  if (arguments.Size() == 2) 
+        else  if (arguments.size() == 2)
         {
             string size = arguments[1];
 
@@ -158,7 +156,7 @@ void UI::next(Vector<std::string> arguments)
     }
 }
 
-void UI::save(Vector<std::string> arguments)
+void UI::save(vector<string> arguments)
 {
     if (this->serviceMode == "B")
     {
@@ -168,37 +166,42 @@ void UI::save(Vector<std::string> arguments)
     }
 }
 
-void UI::mylist(Vector<std::string> arguments)
+void UI::mylist(vector<string> arguments)
 {
     if (this->serviceMode == "B")
     {
-        Vector<Material> materials = this->lowQualificationService.GetSavedMaterials();
+        vector<Material> materials = this->lowQualificationService.GetSavedMaterials();
 
-        for (int i = 0; i < materials.Size(); i++)
+        for (auto currentMaterial : materials)
         {
-            Material currentMaterial = materials[i];
             cout << currentMaterial.Id() << " " << currentMaterial.Size() << " " << currentMaterial.InfectionLevel() << " " << currentMaterial.MicrofragmentsQuantity() << " " << currentMaterial.Photograph() << endl;
         }
     }
 }
 
-Vector<string> rawCommandToArguments(string rawCommand)
+void UI::fileLocation(std::vector<std::string> arguments)
 {
-    Vector<string> arguments;
+    this->filePath = arguments[1];
+    this->highQualificationService.SetFile(this->filePath);
+}
+
+vector<string> rawCommandToArguments(string rawCommand)
+{
+    vector<string> arguments;
 
     char* rawCommandCString = new char[rawCommand.size() + 1];
     strcpy(rawCommandCString, rawCommand.c_str());
 
     int position = rawCommand.find(" ");
     string token = rawCommand.substr(0, position);
-    arguments.Push(token);
+    arguments.push_back(token);
     rawCommand.erase(0, position + 1);
 
     while (position != string::npos)
     {
         position = rawCommand.find(", ");
         token = rawCommand.substr(0, position);
-        arguments.Push(token);
+        arguments.push_back(token);
         rawCommand.erase(0, position + 2);
     }
 
@@ -208,7 +211,7 @@ Vector<string> rawCommandToArguments(string rawCommand)
 // Returns false if the program should exit.
 bool UI::processInput(string input)
 {
-    Vector<string> commandArguments = rawCommandToArguments(input);
+    vector<string> commandArguments = rawCommandToArguments(input);
 
     string command = commandArguments[0];
 
@@ -247,6 +250,10 @@ bool UI::processInput(string input)
     else if (command == "mylist")
     {
         this->mylist(commandArguments);
+    }
+    else if (command == "fileLocation")
+    {
+        this->fileLocation(commandArguments);
     }
 
     return true;

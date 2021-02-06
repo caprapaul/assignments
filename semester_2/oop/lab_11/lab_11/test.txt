@@ -1,0 +1,6 @@
+test,1X2X3,1.000000,1,test.png
+test2,2X2X2,1.000000,15,test.png
+test3,2X2X2,0.000000,5,test.png
+test4,1X2X3,1.000000,11,test.png
+test22,2X2X2,1.000000,15,test.png
+test23,2X2X3,1.000000,15,test.png

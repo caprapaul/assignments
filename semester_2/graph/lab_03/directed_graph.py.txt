@@ -1,0 +1,8 @@
+class DirectedGraph:
+    def __init__(self):
+        # Stores the in and out edge indices of each vertex
+        self.__inout = []
+        # Stores the vertices
+        self.__vertices = []
+        # Stores the edges
+        self.__edges = []

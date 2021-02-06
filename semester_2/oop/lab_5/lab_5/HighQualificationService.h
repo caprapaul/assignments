@@ -3,23 +3,23 @@
 #include <exception>
 #include <string>
 
-#include "Repository.h"
 #include "Material.h"
+#include "RepositoryText.h"
 
 class HighQualificationService
 {
 private:
-    Repository<Material>& repository;
+    RepositoryText<Material>& repository;
 
 public:
-    HighQualificationService(Repository<Material>& repository);
-    HighQualificationService(HighQualificationService const& source);
+    HighQualificationService(RepositoryText<Material>& repository);
     ~HighQualificationService();
 
     void AddMaterial(std::string id, std::string size, float infectionLevel, int microfragmentsQuantity, std::string photograph);
     void UpdateMaterial(std::string id, std::string newSize, float newInfectionLevel, int newMicrofragmentsQuantity, std::string newPhotograph);
     void RemoveMaterial(std::string id);
-    Vector<Material> GetMaterials();
+    std::vector<Material> GetMaterials();
+    void SetFile(std::string filePath);
 };
 
 class HighQualificationServiceException : public std::exception

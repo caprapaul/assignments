@@ -1,0 +1,5 @@
+Mercedes-Benz,SUV,2013,blue
+Audi,SUV,2010,green
+Toyota,SUV,2003,green
+Mercedes-Benz,SUV,1997,red
+Toyota,SUV,2000,blue

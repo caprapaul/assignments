@@ -1,0 +1,20 @@
+#define _CRTDBG_MAP_ALLOC
+
+#include <stdlib.h>
+#include <crtdbg.h>
+
+#include "UI.h"
+#include "Tests.h"
+
+int main()
+{
+    //Tests tests;
+    //tests.RunAll();
+
+    std::shared_ptr<RepositoryText> repository = std::make_shared<RepositoryText>();
+    HighQualificationService highQualificationService(repository);
+    LowQualificationService lowQualificationService(repository);
+    UI ui(highQualificationService, lowQualificationService);
+
+    ui.Run();
+}

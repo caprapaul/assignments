@@ -7,6 +7,7 @@ class Drone():
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
         self.visited = set()
         self.visited.add((x, y))
         self.back = [(x, y)]
@@ -51,11 +52,7 @@ class Drone():
 
         return neighbors
 
-    def move_DSF(self, detected_map):
-        # TO DO!
-        # rewrite this function in such a way that you perform an automatic
-        # mapping with DFS
-
+    def move_dfs(self, detected_map):
         unvisited_neighbors = list(
             filter(lambda x: x not in self.visited,
                    self.get_neighbors(detected_map))

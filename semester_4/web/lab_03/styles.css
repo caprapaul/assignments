@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css?family=Merienda');
+
+body {
+    font-family: "Open Sans", Arial, sans-serif; 
+    background: #eee; 
+    line-height: 22px; 
+    margin: 0px; 
+    padding: 0px; 
+    overflow-x: hidden;
+}
+
+.appbar .container {
+    list-style-type: none;
+    margin: 0 auto;
+    max-width: 1270px;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0;
+}
+
+.appbar {
+    margin: 0;
+    padding: 0;
+    display:block;
+    background:rgb(35, 35, 35, .7); 
+    height:40px;
+    color:#fff;
+    top:0px;
+    left:0;
+    right:0;
+    z-index:99;
+    position: fixed;
+}
+
+.appbar a {
+    display: block;
+    color:#fff; 
+    font-size: 12px; 
+    text-decoration: none;
+    text-align: center;
+}
+
+.appbar .container li {
+    float: left;
+    padding: 9px 0;
+}
+
+.appbar .container #home {
+    width: 6.5%;
+}
+.appbar .container #jobs {
+    width: 6.5%;
+}
+.appbar .container #qa {
+    width: 6.5%;
+}
+.appbar .container #tools {
+    width: 6.5%;
+}
+.appbar .container #coding-ground {
+    width: 11%;
+}
+.appbar .container #upsc {
+    width: 9%;
+}
+.appbar .container #whiteboard {
+    width: 10%;
+}
+.appbar .container #tutorx {
+    width: 6.5%;
+}
+.appbar .container #login {
+    width: 6.5%;
+}
+
+.container {
+    box-sizing: border-box;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 1270px; 
+    text-align: center;
+    margin: 0 auto;
+}
+
+.search-widget {
+    padding: 50px 0 0 0;
+    background: #000 url("https://www.tutorialspoint.com/videotutorials/images/video-banner0.jpg") no-repeat right top;
+    background-size: cover;
+}
+
+.search-widget .container {
+    width: 1270px; 
+    text-align: center;
+    margin: 0 auto;
+}
+
+.search-widget .container #search-box {
+    background:#fff;
+    height: 40px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.search-widget h4 {
+    font-weight: normal;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0px 0px 0px;
+}
+
+.search-widget .logo {
+    width: 100%; 
+    text-align: center;
+}
+
+.search-widget .banner-links {
+    width: 100%; 
+    text-align: center; 
+    margin: 20px 0px 0px 0px;
+    padding: 20px 0;
+}
+
+.search-widget .banner-links .banner-icons {
+    padding-right: 10px;
+}
+
+.search-widget .banner-links a {
+    font-size: 22px; 
+    color: #fff; 
+    margin: 0; 
+    padding: 0 1%;
+    text-decoration: none;
+}
+
+
+button {
+    margin-bottom: 20px;
+    background-color: #3fb35b;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    height: 36px;
+    font-size: 14px;
+    letter-spacing: .03em;
+    padding: 0 26px;
+}
+
+.subscribe-widget {
+    border-top: 2px solid #3fb35b;
+    background: #000;
+}
+
+.subscribe-widget a {
+    text-decoration: none;
+}
+
+.subscribe-widget h1 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #3fb35b;
+}
+
+.subscribe-widget h2 {
+    font-size: 17px; 
+    text-transform: uppercase; 
+    color: #ffff;
+    font-weight: 400;
+}
+
+.empty {
+    height: 500px;
+}

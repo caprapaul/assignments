@@ -26,7 +26,7 @@ class Environment():
             string = string + "\n"
         return string
 
-    def read_UDM_sensors(self, x, y):
+    def read_udm_sensors(self, x, y):
         readings = [0, 0, 0, 0]
         # UP
         xf = x - 1

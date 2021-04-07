@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+
+        var calculator = {};
+
+        const validate = (n) => {
+            return !isNaN(n);
+        }
+
+        const calculate = (operation) => {
+            if (initCalculator()) {
+                var result = document.getElementById('resultSpan');
+                switch (operation) {
+                    case "add": {
+                        result.innerHTML = calculator.a + calculator.b;
+                        break;
+                    };
+
+                    case "subtract": {
+                        result.innerHTML = calculator.a - calculator.b;
+                        break;
+                    };
+
+                    case "multiply": {
+                        result.innerHTML = calculator.a * calculator.b;
+                        break;
+                    };
+
+                    case "divide": {
+                        if (calculate.b == 0) {
+                            console.log("ERROR");
+                            alert("Division by zero!");
+                            return;
+                        }
+
+                        result.innerHTML = calculator.a / calculator.b;
+                        break;
+                    };
+
+                    default: {
+                        break;
+                    }
+                }
+            }
+        }
+
+        const add = () => {
+            calculate("add");
+        }
+
+        const subtract = () => {
+            calculate("subtract");
+        }
+
+        const multiply = () => {
+            calculate("multiply");
+        }
+
+        const divide = () => {
+            calculate("divide");
+        }
+
+        const initCalculator = () => {
+            var inputOne = document.getElementById("inputOne");
+            var inputTwo = document.getElementById("inputTwo");
+            var inputOneValue = inputOne.value;
+            var inputTwoValue = inputTwo.value;
+
+            if (!validate(inputOneValue) || !validate(inputTwoValue)) {
+                console.log("ERROR");
+                alert("Please enter valid numbers!");
+                return false;
+            }
+
+            calculator.a = parseInt(inputOneValue);
+            calculator.b = parseInt(inputTwoValue);
+            return true;
+        }
+
+        $(() => {
+            $('#add').click(add);
+            $('#subtract').click(subtract);
+            $('#multiply').click(multiply);
+            $('#divide').click(divide);
+        });
+
+    </script>
+</head>
+
+<body>
+    <input type="text" id="inputOne">
+    <input id="add" type="button" value="+">
+    <input id="subtract" type="button" value="-">
+    <input id="multiply" type="button" value="*">
+    <input id="divide" type="button" value="/">
+    <input type="text" id="inputTwo">
+    =
+    <span id="resultSpan">
+    </span>
+</body>
+
+</html>

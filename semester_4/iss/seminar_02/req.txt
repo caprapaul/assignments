@@ -1,0 +1,1 @@
+1) Restaurant: Create a business use case diagram for a Restaurant. A customer can or-der a meal, the restaurant must have suppliers, employees, contractual personal,

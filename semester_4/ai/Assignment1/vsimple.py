@@ -11,14 +11,12 @@ from drone import Drone
 
 from constants import *
 
-from tkinter import *
-from tkinter import messagebox
-
 
 def main():
     # we create the environment
     e = Environment()
-    e.load_environment("test2.map")
+    # e.load_environment("test2.map")
+    e.random_map(0.3)
     # print(str(e))
 
     # we create the map
@@ -81,18 +79,13 @@ def main():
                 delay = max(10, delay)
 
                 if (not auto) and not d.is_finished():
-                    d.move_DSF(m)
+                    d.move_dfs(m)
 
         if auto and not d.is_finished():
-            d.move_DSF(m)
+            d.move_dfs(m)
             pygame.time.delay(delay)
 
         screen.blit(m.image(d.x, d.y), (400, 0))
-
-        if d.is_finished() and not message_shown:
-            Tk().wm_withdraw()
-            messagebox.showinfo('Job\'s done!', 'Finished map.')
-            message_shown = True
 
         pygame.display.flip()
 

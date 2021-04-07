@@ -17,7 +17,7 @@ class DMap():
         if (x, y) == (None, None):
             return
 
-        wals = e.read_UDM_sensors(x, y)
+        wals = e.read_udm_sensors(x, y)
         i = x - 1
         if wals[UP] > 0:
             while ((i >= 0) and (i >= x - wals[UP])):

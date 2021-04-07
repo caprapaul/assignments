@@ -1,0 +1,41 @@
+body {
+    background-color: #1f1f1f;
+}
+
+.thumb {
+    object-fit: cover;
+    object-position: 80% 0;
+    position: relative;
+
+    width: 220px;
+    height: 160px;
+    top: 680px;
+}
+
+.container {
+    position: relative;
+    height: 966px;
+    width: 1280px;
+    overflow: hidden;
+    padding: 0 auto;
+}
+
+.container a {
+    float: left;
+    margin: 10px;
+}
+  
+.big {
+    position: absolute;
+    top: -1000px;
+    left: 80px;
+    transition: top 0.5s ease;
+}
+
+a:hover .thumb {
+    box-shadow: 0 0 15px #eeeeee44;
+}
+
+a:hover .big {
+    top: 20px;
+}

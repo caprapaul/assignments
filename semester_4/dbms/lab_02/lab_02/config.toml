@@ -1,0 +1,23 @@
+﻿option = 0
+
+[[tables]]
+    [tables.parent]
+    name = "Players"
+    select = "SELECT * FROM Players"
+    key = "Id"
+    
+    [tables.child]
+    name = "Characters"
+    select = "SELECT * FROM Characters"
+    key = "PlayerId"
+
+[[tables]]
+    [tables.parent]
+    name = "Enemies"
+    select = "SELECT * FROM Enemies"
+    key = "Id"
+    
+    [tables.child]
+    name = "EnemiesInstances"
+    select = "SELECT * FROM EnemiesInstances"
+    key = "EnemyId"

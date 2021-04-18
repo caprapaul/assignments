@@ -42,10 +42,8 @@ namespace lab_02
                 new SqlConnection(
                     @"Data Source = DESKTOP-CMIOIHP\SQLEXPRESS; Initial Catalog = MMORPG; Integrated Security = True");
             
-            // contains data tables that store a local copy of the data
             _dataSet = new DataSet();
 
-            // data adapters are the link between data sets and the database to get the data and change it
             _daParent = new SqlDataAdapter(_parent["select"].AsString.Value, _connection);
             _daChild = new SqlDataAdapter(_child["select"].AsString.Value, _connection);
             new SqlCommandBuilder(_daChild);
@@ -86,7 +84,6 @@ namespace lab_02
         {
             _connection.Open();
             
-            // fill thee dataset with the data from the database
             _daParent.Fill(_dataSet, _parent["name"].AsString.Value);
             _daChild.Fill(_dataSet, _child["name"].AsString.Value);
             
@@ -101,7 +98,6 @@ namespace lab_02
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            // update the database by executing an INSERT/UPDATE/DELETE on each row based on its state
             _daChild.Update(_dataSet, _child["name"].AsString.Value);
         }
 

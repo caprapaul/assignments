@@ -348,16 +348,8 @@ def test():
 
     appliedForce = 0
 
-    getTicksLastFrame = pygame.time.get_ticks()
-    adjustDelta = 0
-    adjustCooldown = 1
-
     while 1:
-        # deltaTime in seconds.
-        deltaTime = (pygame.time.get_ticks() - getTicksLastFrame) / 1000.0
-        adjustDelta += deltaTime
-
-        clock.tick(60)
+        # clock.tick(60)
         for e in pygame.event.get():
             if e.type == QUIT:
                 #print(revPend.w, revPend.W)
@@ -408,19 +400,15 @@ def test():
         appliedForce = 0
 
         # se calculeaza raspunsul
-        if adjustDelta >= adjustCooldown:
-            adjustDelta -= adjustCooldown
-
-            newForce = solver(t, w)
-            if newForce != None:
-                appliedForce = newForce
+        newForce = solver(t, w)
+        if newForce != None:
+            appliedForce = newForce
 
         print(t, w, appliedForce)
         # se deseneaza pendulul
         revPend.draw()
 
         pygame.display.flip()
-        getTicksLastFrame = t
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     pygame.quit()

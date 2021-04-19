@@ -115,7 +115,17 @@ def classify(points):
             if closest_cluster.add_point(point):
                 changed = True
 
+    return clusters
+
+
+def fix_labels(clusters):
+    for cluster in clusters:
+        labels_list = [point.correct_label for point in cluster.points]
+        dominant_label = max(set(labels_list), key=labels_list.count)
+        cluster.label = dominant_label
+
 
 points = load_points('dataset.csv')
-classify(points)
+clusters = classify(points)
+fix_labels(clusters)
 save_points(points, 'output.csv')

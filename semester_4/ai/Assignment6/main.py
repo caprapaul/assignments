@@ -1,7 +1,9 @@
 import math
 import random
+import matplotlib.pyplot as plt
 
-EPSILON = 0.001
+EPSILON = 0.01
+PLOT = False
 
 
 class Stats:
@@ -23,30 +25,33 @@ class Point:
         self.cluster = None
 
     def __eq__(self, o):
-        return approximately_equal(self.x, o.x, EPSILON) and approximately_equal(self.y, o.y, EPSILON)
+        return self.x == o.x and self.y == o.y
 
-    def get_closest_cluster(point, clusters):
+    def __hash__(self):
+        return (self.x, self.y).__hash__()
+
+    def get_closest_cluster(self, clusters):
         closest = clusters[0]
 
         for cluster in clusters:
-            if distance(point.x, point.y, cluster.mean_x, cluster.mean_y) < distance(point.x, point.y, closest.mean_x, closest.mean_y):
+            if distance(self.x, self.y, cluster.mean_x, cluster.mean_y) < distance(self.x, self.y, closest.mean_x, closest.mean_y):
                 closest = cluster
 
         return closest
 
 
 class Cluster:
-    def __init__(self):
-        self.label = 'X'
+    def __init__(self, label):
+        self.label = label
         self.points = []
         self.mean_x = 0
         self.mean_y = 0
 
     def add_point(self, point):
-        self.points.append(point)
-
         if point.cluster is not None:
             point.cluster.remove_point(point)
+
+        self.points.append(point)
 
         point.cluster = self
         return self.update_mean()
@@ -75,9 +80,9 @@ class Cluster:
         tp = [point for point in self.points if point.correct_label == self.label]
         fp = [point for point in self.points if point.correct_label != self.label]
         tn = [point for point in points if point.cluster.label !=
-              self.label and point not in self.points]
-        fn = [point for point in points if point.cluster.label ==
-              self.label and point not in self.points]
+              self.label and point.correct_label != self.label]
+        fn = [point for point in points if point.cluster.label !=
+              self.label and point.correct_label == self.label]
 
         tp = len(tp)
         fp = len(fp)
@@ -87,17 +92,18 @@ class Cluster:
         accuracy = (tp + tn) / (tp + tn + fp + fn)
         precision = tp / (tp + fp)
         recall = tp / (tp + fn)
-        f_score = 2 / ((1 / recall) / (1 / precision))
+        f_score = 2 / ((1 / recall) + (1 / precision))
 
         return Stats(accuracy, precision, recall, f_score)
 
 
 def distance(x1, y1, x2, y2):
-    return math.dist((x1, y1), (x2, y2))
+    # return abs(x1 - x2) + abs(y1 - y2)
+    return (x1 - x2) ** 2 + (y1 - y2) ** 2
 
 
 def approximately_equal(a, b, epsilon):
-    return a - b <= epsilon
+    return abs(a - b) <= epsilon
 
 
 def load_points(file_path):
@@ -156,12 +162,12 @@ def save_clusters(clusters, file_path):
         writer.write(output)
 
 
-def classify(points):
+def classify(points, plot=True):
     clusters = [
-        Cluster(),
-        Cluster(),
-        Cluster(),
-        Cluster()
+        Cluster('A'),
+        Cluster('B'),
+        Cluster('C'),
+        Cluster('D')
     ]
 
     random_points = random.sample(points, len(clusters))
@@ -173,14 +179,25 @@ def classify(points):
 
     changed = True
 
+    # plot_clusters(clusters)
+
+    step = True
+    stepSize = 500
+
     while changed:
         changed = False
 
-        for point in points:
+        for i, point in enumerate(points):
             closest_cluster = point.get_closest_cluster(clusters)
 
             if closest_cluster.add_point(point):
                 changed = True
+
+            if plot and step and i % stepSize == 0:
+                plot_clusters(clusters, 0.1)
+
+        if plot and not step:
+            plot_clusters(clusters, 1)
 
     return clusters
 
@@ -191,15 +208,64 @@ def update_labels(clusters):
 
 
 def print_stats(points, clusters):
-    clusters =
     for cluster in clusters:
         stats = cluster.get_stats(points)
         print(f'{cluster.label}:\n {stats}')
 
 
+def label_to_color(label):
+    if label == 'A':
+        return'red'
+    if label == 'B':
+        return 'blue'
+    if label == 'C':
+        return 'green'
+    if label == 'D':
+        return 'yellow'
+
+    return 'black'
+
+
+def plot_points(points):
+    x = [point.x for point in points]
+    y = [point.y for point in points]
+    c = [label_to_color(point.correct_label) for point in points]
+
+    plt.scatter(x, y, c=c, alpha=0.5)
+
+    plt.pause(3)
+
+
+def plot_clusters(clusters, pause=1):
+    plt.clf()
+    for cluster in clusters:
+        x = [point.x for point in cluster.points]
+        y = [point.y for point in cluster.points]
+
+        color = label_to_color(cluster.label)
+
+        plt.scatter(x, y, c=color, label=cluster.label, alpha=0.5)
+        plt.scatter(cluster.mean_x, cluster.mean_y,
+                    c='black', label='Mean', alpha=0.6)
+
+    handles, labels = plt.gca().get_legend_handles_labels()
+    by_label = dict(zip(labels, handles))
+    plt.legend(by_label.values(), by_label.keys())
+    plt.pause(pause)
+
+
+random.seed(11)
+
+
 points = load_points('dataset.csv')
-clusters = classify(points)
+print(len(set(points)))
+if PLOT:
+    plot_points(points)
+clusters = classify(points, PLOT)
 update_labels(clusters)
 print_stats(points, clusters)
+if PLOT:
+    plot_clusters(clusters)
+    plt.show()
 save_clusters(clusters, 'output_clusters.csv')
 save_points(points, 'output_points.csv')

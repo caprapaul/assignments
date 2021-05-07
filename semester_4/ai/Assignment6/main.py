@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 
 EPSILON = 0.01
-PLOT = False
+PLOT = True
 
 
 class Stats:
@@ -143,8 +143,7 @@ def load_clusters(file_path):
         label, x, y = line.split(',')
         x = float(x)
         y = float(y)
-        cluster = Cluster()
-        cluster.label = label
+        cluster = Cluster(label)
         cluster.mean_x = x
         cluster.mean_y = y
         clusters.append(cluster)
@@ -226,14 +225,14 @@ def label_to_color(label):
     return 'black'
 
 
-def plot_points(points):
+def plot_points(points, pause=2):
     x = [point.x for point in points]
     y = [point.y for point in points]
     c = [label_to_color(point.correct_label) for point in points]
 
     plt.scatter(x, y, c=c, alpha=0.5)
 
-    plt.pause(3)
+    plt.pause(pause)
 
 
 def plot_clusters(clusters, pause=1):
@@ -259,13 +258,17 @@ random.seed(11)
 
 points = load_points('dataset.csv')
 print(len(set(points)))
+
 if PLOT:
     plot_points(points)
+
 clusters = classify(points, PLOT)
 update_labels(clusters)
 print_stats(points, clusters)
+
 if PLOT:
     plot_clusters(clusters)
     plt.show()
+
 save_clusters(clusters, 'output_clusters.csv')
 save_points(points, 'output_points.csv')

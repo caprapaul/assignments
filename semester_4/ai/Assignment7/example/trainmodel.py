@@ -1,4 +1,3 @@
-
 import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
@@ -6,7 +5,7 @@ import numpy as np
 
 import myModel
 
-device = 'cpu' if torch.cuda.is_available() else 'cpu'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print('Using {} device'.format(device))
 
 pairs = torch.load('mydataset.dat')
@@ -31,23 +30,23 @@ ann = myModel.Net(n_feature=2, n_hidden=10,
 
 print(ann)
 # we use an optimizer that implements stochastic gradient descent
-optimizer = torch.optim.SGD(ann.parameters(), lr=1e-4)
+optimizer = torch.optim.SGD(ann.parameters(), lr=0.01)
 
 # we memorize the losses forsome graphics
 loss_list = []
 avg_loss_list = []
 
 # we set up the environment for training in batches
-epochs = 2000
+epochs = 4000
 batch_size = 256
-n_batches = int(len(x) / batch_size)
+n_batches = len(x) // batch_size
 print(n_batches)
 
 for epoch in range(epochs):
     for batch in range(n_batches):
         # we prepare the current batch  -- please observe the slicing for tensors
         batch_X, batch_y = x[batch * batch_size:(
-            batch + 1) * batch_size, ], y[batch*batch_size:(batch+1)*batch_size, ]
+            batch + 1) * batch_size, ], y[batch * batch_size:(batch + 1) * batch_size, ]
 
         # we compute the output for this batch
         prediction = ann(batch_X)
@@ -56,7 +55,7 @@ for epoch in range(epochs):
         loss = loss_fn(prediction, batch_y)
 
         # we save it for graphics
-        loss_list.append(loss)
+        loss_list.append(loss.item())
 
         # we set up the gradients for the weights to zero (important in pytorch)
         optimizer.zero_grad()
@@ -68,7 +67,7 @@ for epoch in range(epochs):
         optimizer.step()
 
     # we print the loss for all the dataset for each 10th epoch
-    if epoch % 100 == 99:
+    if epoch % 250 == 0:
         y_pred = ann(x)
         loss = loss_fn(y_pred, y)
         print('\repoch: {}\tLoss =  {:.5f}'.format(epoch, loss.item()))
@@ -84,7 +83,7 @@ for name, param in ann.named_parameters():
     if param.requires_grad:
         print(name, param.data)
 
-loss_list = [l.item() for l in loss_list]
+#loss_list = [l.item() for l in loss_list]
 
 plt.plot(loss_list)
 plt.title('Loss VS Epoch')

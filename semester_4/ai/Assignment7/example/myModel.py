@@ -14,6 +14,8 @@ class Net(torch.nn.Module):
         self.output = torch.nn.Sequential(
             torch.nn.Linear(n_feature, n_hidden).to(device),
             torch.nn.ReLU().to(device),
+            torch.nn.Linear(n_hidden, n_hidden).to(device),
+            torch.nn.ReLU().to(device),
             torch.nn.Linear(n_hidden, n_output).to(device)
         )
 

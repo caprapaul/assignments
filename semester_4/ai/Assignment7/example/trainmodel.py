@@ -2,6 +2,7 @@ import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 import myModel
 
@@ -39,7 +40,7 @@ avg_loss_list = []
 # we set up the environment for training in batches
 epochs = 4000
 batch_size = 256
-n_batches = len(x) // batch_size
+n_batches = int(math.ceil(len(x) / batch_size))
 print(n_batches)
 
 for epoch in range(epochs):
@@ -83,7 +84,7 @@ for name, param in ann.named_parameters():
     if param.requires_grad:
         print(name, param.data)
 
-#loss_list = [l.item() for l in loss_list]
+# loss_list = [l.item() for l in loss_list]
 
 plt.plot(loss_list)
 plt.title('Loss VS Epoch')

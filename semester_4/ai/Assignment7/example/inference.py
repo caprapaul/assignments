@@ -27,10 +27,13 @@ ann.eval()
 #     if param.requires_grad:
 #         print (name, param.data)
 
+input_ = input("x1, x2 = ")
 
-x1, x2 = input("x1, x2 = ").split(',')
-x1 = float(x1)
-x2 = float(x2)
-x = torch.tensor([x1, x2]).to(device)
-print(ann(x).tolist())
-print(f'correct: {np.sin(x1 + x2 / np.pi)}')
+while input_.upper() != 'EXIT':
+    x1, x2 = input_.split(',')
+    x1 = float(x1)
+    x2 = float(x2)
+    x = torch.tensor([x1, x2]).to(device)
+    print(ann(x).tolist())
+    print(f'correct: {np.sin(x1 + x2 / np.pi)}')
+    input_ = input("x1, x2 = ")

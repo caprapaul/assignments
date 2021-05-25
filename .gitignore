@@ -62,6 +62,8 @@ bld/
 ## Others
 .vscode/
 .gradle/
+gradle/
+.build/
 *.zip
 [Pp]ackages/
 *.png

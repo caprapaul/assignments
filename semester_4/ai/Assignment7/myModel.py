@@ -8,7 +8,6 @@ class Net(torch.nn.Module):
     # the class for the network
 
     def __init__(self, n_input, n_hidden, n_output, hidden_layers=1):
-        # we have two layers: a hidden one and an output one
         super(Net, self).__init__()
         modules = []
         modules.append(torch.nn.Linear(n_input, n_hidden))

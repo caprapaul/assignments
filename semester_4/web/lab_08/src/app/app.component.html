@@ -1,0 +1,43 @@
+<body>
+  <h1>News</h1>
+  <form>
+    <label for="category">Category:</label>
+    <select id="category">
+      <option value="All">All</option>
+      <option value="Health">Health</option>
+      <option value="Science">Science</option>
+      <option value="Sport">Sport</option>
+      <option value="Politics">Politics</option>
+      <option value="Society">Society</option>
+    </select>
+    <label for="start">Start date:</label>
+    <input id="start" type="date" value="1970-01-01" min="1970-01-01" max="2021-12-31">
+    <label for="end">End date:</label>
+    <input id="end" type="date" value="2021-12-31" min="1970-01-01" max="2021-12-31">
+    <input id="refresh" type="button" value="Load news" />
+  </form>
+
+  <div id="maindiv">
+    <table id="news" border="1">
+      <tr id="headers">
+        <th>Id</th>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Producer</th>
+        <th>Date</th>
+        <th>Category</th>
+      </tr>
+      <tbody>
+        <tr id="add-row">
+          <td></td>
+          <td><input id="add-title" type="text"></td>
+          <td><input id="add-text" type="text"></td>
+          <td><input id="add-producer" type="text"></td>
+          <td><input id="add-date" type="date"></td>
+          <td><input id="add-category" type="text"></td>
+          <td><input id="add" type="button" value="Add Row"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>

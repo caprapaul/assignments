@@ -1,0 +1,8 @@
+USE MMORPG
+GO
+
+BEGIN TRANSACTION
+    UPDATE Players set Name = 'TestLock1_1' WHERE Id = 1;
+    UPDATE Players set Name = 'TestLock2_1' WHERE Id = 2;
+ROLLBACK TRANSACTION
+COMMIT TRANSACTION

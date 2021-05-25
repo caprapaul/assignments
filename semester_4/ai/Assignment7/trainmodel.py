@@ -12,7 +12,7 @@ def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print('Using {} device'.format(device))
 
-    pairs = torch.load('mydataset.dat')
+    pairs = torch.load('mydataset1.dat')
     # print(pairs)
 
     x = torch.empty(0, 2).to(device)
@@ -70,7 +70,7 @@ def main():
             optimizer.step()
 
         # we print the loss for all the dataset for each 10th epoch
-        if (epoch + 1) % 250 == 0:
+        if (epoch + 1) % 500 == 0:
             y_pred = ann(x)
             loss = loss_fn(y_pred, y)
             print('\repoch: {}\tLoss =  {:.5f}'.format(epoch, loss.item()))

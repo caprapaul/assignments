@@ -63,7 +63,7 @@ bld/
 .vscode/
 .gradle/
 gradle/
-.build/
+build/
 *.zip
 [Pp]ackages/
 *.png

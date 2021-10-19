@@ -1,0 +1,72 @@
+Alphabet:
+    a. Upper (A-Z) and lower case letters (a-z) of the English alphabet
+    b. Underline character '_';
+    c. Decimal digits (0-9);
+
+1. Lexic:
+  a.Special symbols, representing:
+  - operators + - * / = < <= == >= > && || !
+  - separators [ ] { } : ; space
+  - reserved words:
+    let const
+    char i32 bool
+    if else while
+    print read
+
+  b.identifiers -a sequence of letters and digits, such that the first character is a letter; the rule is:
+    identifier ::= (letter | "_") {letter | digit | "_"}
+    letter ::= "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+    digit ::= "0" | "1" | ... | "9"
+
+  c.constants
+    1.integer:
+      const_int ::= [(+|-)] const_uint
+      const_uint ::= digit {const_uint}
+
+    2.character:
+      const_char ::= ' (letter | digit) '
+
+    3.string
+      const_string ::= " string "
+      string ::= (letter | digit) {string}
+      symbol ::= " " | "_"
+
+    4.boolean
+      const_bool ::= "true" | "false"
+
+2. Syntax:
+  The words - predefined tokens are specified between " and ":
+  
+  program ::= [compound_statement]
+
+  compound_statement ::= statement {statement}
+  statement ::= (assign_stmt | if_stmt | while_stmt | declare_stmt)
+  declare_stmt ::= "let " IDENTIFIER ":" type
+  assign_stmt ::= IDENTIFIER "=" expression
+  if_stmt ::= "if" "(" expression ")" statement
+  while_stmt ::= "while" "(" expression ")" statement
+  
+  type ::= basic_type | array_type
+  basic_type ::= "i32" | "char" | "bool" | "REAL"
+  array_type ::= "[" type ";" const_uint "]"
+  
+
+  decllist ::= declaration | declaration ";" decllist
+  declaration ::= IDENTIFIER ":" type
+  type1 ::= "BOOLEAN" | "CHAR" | "INTEGER" | "REAL"
+  arraydecl ::= "ARRAY" "[" nr "]" "OF" type1
+  type ::= type1|arraydecl
+  compound_statement ::= "BEGIN" stmtlist "END"
+  stmtlist ::= stmt | stmt ";" stmtlist
+  stmt ::= simplstmt | structstmt
+  simplstmt ::= assignstmt | iostmt
+  assignstmt ::= IDENTIFIER ":=" expression
+  expression ::= expression "+" term | term
+  term ::= term "*" factor | factor
+  factor ::= "(" expression ")" | IDENTIFIER
+  iostmt ::= "READ" | "WRITE" "(" IDENTIFIER ")"
+  structstmt ::= cmpdstmt | ifstmt | whilestmt
+  ifstmt ::= "IF" condition "THEN" stmt ["ELSE" stmt]
+  whilestmt ::= "WHILE" condition "DO" stmt
+  condition ::= expression RELATION expression
+  RELATION ::= "<" | "<=" | "=" | "<>" | ">=" | ">"

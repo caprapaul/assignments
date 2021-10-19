@@ -29,33 +29,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PlayersGrid = new System.Windows.Forms.DataGridView();
-            this.CharactersGrid = new System.Windows.Forms.DataGridView();
+            this.dgvCategories = new System.Windows.Forms.DataGridView();
+            this.dgvProducts = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.UpdateButton = new System.Windows.Forms.Button();
             this.RefreshButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize) (this.PlayersGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.CharactersGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dgvCategories)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dgvProducts)).BeginInit();
             this.SuspendLayout();
             // 
-            // PlayersGrid
+            // dgvCategories
             // 
-            this.PlayersGrid.AllowUserToAddRows = false;
-            this.PlayersGrid.AllowUserToDeleteRows = false;
-            this.PlayersGrid.Location = new System.Drawing.Point(12, 35);
-            this.PlayersGrid.Name = "PlayersGrid";
-            this.PlayersGrid.ReadOnly = true;
-            this.PlayersGrid.Size = new System.Drawing.Size(546, 150);
-            this.PlayersGrid.TabIndex = 0;
+            this.dgvCategories.AllowUserToAddRows = false;
+            this.dgvCategories.AllowUserToDeleteRows = false;
+            this.dgvCategories.Location = new System.Drawing.Point(12, 35);
+            this.dgvCategories.Name = "dgvCategories";
+            this.dgvCategories.ReadOnly = true;
+            this.dgvCategories.Size = new System.Drawing.Size(546, 150);
+            this.dgvCategories.TabIndex = 0;
             // 
-            // CharactersGrid
+            // dgvProducts
             // 
-            this.CharactersGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CharactersGrid.Location = new System.Drawing.Point(12, 266);
-            this.CharactersGrid.Name = "CharactersGrid";
-            this.CharactersGrid.Size = new System.Drawing.Size(546, 150);
-            this.CharactersGrid.TabIndex = 1;
+            this.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProducts.Location = new System.Drawing.Point(12, 266);
+            this.dgvProducts.Name = "dgvProducts";
+            this.dgvProducts.Size = new System.Drawing.Size(546, 150);
+            this.dgvProducts.TabIndex = 1;
             // 
             // label1
             // 
@@ -102,13 +102,13 @@
             this.Controls.Add(this.UpdateButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.CharactersGrid);
-            this.Controls.Add(this.PlayersGrid);
+            this.Controls.Add(this.dgvProducts);
+            this.Controls.Add(this.dgvCategories);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize) (this.PlayersGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.CharactersGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dgvCategories)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.dgvProducts)).EndInit();
             this.ResumeLayout(false);
         }
 
@@ -119,9 +119,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
 
-        private System.Windows.Forms.DataGridView CharactersGrid;
+        private System.Windows.Forms.DataGridView dgvProducts;
 
-        private System.Windows.Forms.DataGridView PlayersGrid;
+        private System.Windows.Forms.DataGridView dgvCategories;
 
         #endregion
     }

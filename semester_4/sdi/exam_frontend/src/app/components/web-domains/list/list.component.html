@@ -1,0 +1,38 @@
+<div class="container">
+    <p>{{errorMessage}}</p>
+    <div class="row">
+        <div *ngIf="errorMessage">
+            {{errorMessage}}
+        </div>
+        <div class="">
+            <input #filterInput type="text" placeholder="Filter by name" style="margin-top: 50px;">
+            <button (click)="filter(filterInput.value)" class="btn btn-primary">Filter</button>
+        </div>
+        <table class="table">
+            <thead>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let webDomain of webDomains">
+                    <th scope="row" #id>{{webDomain.id}}</th>
+                    <td><input #name name="name" type="text" value="{{webDomain.name}}"></td>
+                    <td><input #price name="price" type="text" value="{{webDomain.price}}"></td>
+                    <td><button (click)="delete(id.innerText)">Delete</button>
+                        <button (click)="update(id.innerText, name.value, price.value)">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" #id>#</th>
+                    <td><input #name name="name" type="text" value="" placeholder="Enter name"></td>
+                    <td><input #price name="price" type="text" placeholder="Enter price"></td>
+                    <td>
+                        <button (click)="add(name.value, price.value)" class="btn btn-primary">Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

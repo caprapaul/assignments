@@ -1,0 +1,25 @@
+// find the maximum of 3 integers x, y, z
+let x: i32;
+let y: i32;
+let z: i32;
+let max: i32;
+
+read(x);
+read(y);
+read(z);
+
+if (x > y)
+{
+  max = x;
+}
+else
+{
+  max = y;
+}
+
+if (z > max)
+{
+  z = max;
+}
+
+print(max);

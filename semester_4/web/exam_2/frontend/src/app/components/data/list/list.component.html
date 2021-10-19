@@ -1,0 +1,56 @@
+<form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm">
+  <div class="form-group">
+    <label for="word">Word</label>
+    <br>
+    <input type="text" class="form-control" name="word" [(ngModel)]="model.word" #word="ngModel" required />
+    <div *ngIf="word.invalid && word.errors && (word.dirty || word.touched)" class="alert">
+      <div *ngIf="word.errors.required">
+        Word is required.
+      </div>
+    </div>
+    <br>
+    <div>
+      <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Search</button>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="errorMessage">
+  {{errorMessage}}
+</div>
+
+<div class="container">
+  <div class="row">
+    <table class="table">
+      <thead>
+        <th scope="col">Id</th>
+        <th scope="col">User</th>
+        <th scope="col">Name</th>
+        <th scope="col">Content</th>
+        <th scope="col">Size</th>
+        <th scope="col">Count</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of data">
+          <th scope="row" #id>{{file.id}}</th>
+          <td><input #user name="user" type="text" value="{{file.userid}}"></td>
+          <td><input #name name="name" type="text" value="{{file.filename}}"></td>
+          <td><input #content name="content" type="text" value="{{file.filecontent}}"></td>
+          <td><input #size name="size" type="text" value="{{file.size}}"></td>
+          <td><input #count name="count" type="text" value="{{file.count}}"></td>
+          <!-- <td><button (click)="delete(id.innerText)">Delete</button>
+            <button (click)="update(id.innerText, username.value, password.value)">Update</button>
+          </td> -->
+        </tr>
+        <!-- <tr>
+          <th scope="row" #id>#</th>
+          <td><input #username name="username" type="text" value="" placeholder="Enter name"></td>
+          <td><input #password name="password" type="text" placeholder="Enter password"></td>
+          <td>
+            <button (click)="add(username.value, password.value)" class="btn btn-primary">Add</button>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+</div>

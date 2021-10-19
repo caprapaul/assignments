@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
 namespace lab_01
@@ -14,11 +9,11 @@ namespace lab_01
     public partial class Form1 : Form
     {
         private SqlConnection _connection;
-        private SqlDataAdapter _daPlayers;
-        private SqlDataAdapter _daCharacters;
+        private SqlDataAdapter _daCategories;
+        private SqlDataAdapter _daProducts;
         private DataSet _dataSet;
-        private BindingSource _bsPlayers;
-        private BindingSource _bsCharacters;
+        private BindingSource _bsCategories;
+        private BindingSource _bsProducts;
 
         public Form1()
         {
@@ -29,67 +24,54 @@ namespace lab_01
         {
             _connection =
                 new SqlConnection(
-                    @"Data Source = DESKTOP-CMIOIHP\SQLEXPRESS; Initial Catalog = MMORPG; Integrated Security = True");
+                    @"Data Source = DESKTOP-CMIOIHP\SQLEXPRESS; Initial Catalog = coffee_shops; Integrated Security = True");
             
-            // contains data tables that store a local copy of the data
             _dataSet = new DataSet();
 
-            // data adapters are the link between data sets and the database to get the data and change it
-            _daPlayers = new SqlDataAdapter("SELECT * FROM Players", _connection);
-            _daCharacters = new SqlDataAdapter("SELECT * FROM Characters", _connection);
-            new SqlCommandBuilder(_daCharacters);
-            _bsPlayers = new BindingSource();
-            _bsCharacters = new BindingSource();
+            _daCategories = new SqlDataAdapter("SELECT * FROM ProductCategories", _connection);
+            _daProducts = new SqlDataAdapter("SELECT * FROM CoffeeProducts", _connection);
+            new SqlCommandBuilder(_daProducts);
+            _bsCategories = new BindingSource();
+            _bsProducts = new BindingSource();
             
             Fill();
 
             DataRelation dataRelation = new DataRelation(
-                "FK_PlayersCharacters",
-                _dataSet.Tables["Players"].Columns["Id"],
-                _dataSet.Tables["Characters"].Columns["PlayerId"]
+                "FK_CategoriesProducts",
+                _dataSet.Tables["ProductCategories"].Columns["Id"],
+                _dataSet.Tables["CoffeeProducts"].Columns["CategoryId"]
             );
             _dataSet.Relations.Add(dataRelation);
             
-            _bsPlayers.DataSource = _dataSet;
-            _bsPlayers.DataMember = "Players";
+            _bsCategories.DataSource = _dataSet;
+            _bsCategories.DataMember = "ProductCategories";
             
-            _bsCharacters.DataSource = _bsPlayers;
-            _bsCharacters.DataMember = "FK_PlayersCharacters";
+            _bsProducts.DataSource = _bsCategories;
+            _bsProducts.DataMember = "FK_CategoriesProducts";
 
-            PlayersGrid.DataSource = _bsPlayers;
-            CharactersGrid.DataSource = _bsCharacters;
-            
-            CharactersGrid.Columns["PlayerId"].Visible = false;
-            CharactersGrid.Columns["AttributesId"].Visible = false;
-            CharactersGrid.Columns["Id"].ReadOnly = true;
+            dgvCategories.DataSource = _bsCategories;
+            dgvProducts.DataSource = _bsProducts;
         }
 
         private void Fill()
         {
             _connection.Open();
             
-            // fill thee dataset with the data from the database
-            _daPlayers.Fill(_dataSet, "Players");
-            _daCharacters.Fill(_dataSet, "Characters");
+            _daCategories.Fill(_dataSet, "ProductCategories");
+            _daProducts.Fill(_dataSet, "CoffeeProducts");
             
             _connection.Close();
         }
 
-        private void Reload()
-        {
-            _dataSet.Clear();
-            Fill();
-        }
-
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            // update the database by executing an INSERT/UPDATE/DELETE on each row based on its state
-            _daCharacters.Update(_dataSet, "Characters");
+            _daProducts.Update(_dataSet, "CoffeeProducts");
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)
         {
-            Reload();
+            _dataSet.Clear();
+            Fill();
         }
     }
 }

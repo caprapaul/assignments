@@ -1,0 +1,130 @@
+<html>
+
+<head>
+  <script src="jquery-2.1.4.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#news').hide();
+      $("#refresh").click(updateTable);
+
+      $("#add").click(function () {
+        $.post(
+          "https://localhost:5001/api/news", {
+            title: $("#add-title").val(),
+            text: $("#add-text").val(),
+            producer: $("#add-producer").val(),
+            date: $("#add-date").val(),
+            category: $("#add-category").val()
+          },
+          () => updateTable()
+        );
+      });
+
+      function updateTable() {
+        $.getJSON(
+          "https://localhost:5001/api/news", {
+            start: $("#start").val(),
+            end: $("#end").val(),
+            category: $("#category").val()
+          },
+          renderTable
+        );
+      }
+
+      function deleteRow(id) {
+        $.get(
+          "news-delete.php", {
+            id: id
+          },
+          () => updateTable()
+        );
+      }
+
+      function updateRow(id) {
+        $.post(
+          "news-update.php", {
+            id: id,
+            title: $(`#news tbody #${id} td:nth-child(2) input:nth-child(1)`).val(),
+            text: $(`#news tbody #${id} td:nth-child(3) input:nth-child(1)`).val(),
+            producer: $(`#news tbody #${id} td:nth-child(4) input:nth-child(1)`).val(),
+            date: $(`#news tbody #${id} td:nth-child(5) input:nth-child(1)`).val(),
+            category: $(`#news tbody #${id} td:nth-child(6) input:nth-child(1)`).val()
+          },
+          () => updateTable()
+        );
+      }
+
+      function renderTable(data) {
+        $("#news tbody tr:not(#add-row):not(#headers)").remove();
+        var tableBody = '';
+        $.each(data, function (i, item) {
+          tableBody += '<tr id=' + item.id +
+            '><td>' + item.id +
+            '</td><td><input type="text" value="' + item.title +
+            '"></td> <td><input type="text" size="64" value="' + item.text +
+            '"></td> <td><input type="text" value="' + item.producer +
+            '"></td> <td><input type="date" value="' + item.date +
+            '"></td> <td><input type="text" value="' + item.category +
+            '"></td> <td><input id="update-' + item.id + '" type="button" value="Update"></td>' +
+            '</td> <td><input id="delete-' + item.id + '" type="button" value="Delete"></td></tr>';
+        });
+
+        $('#news').append(tableBody);
+
+        $.each(data, function (i, item) {
+          $("#delete-" + item.id).click(() => deleteRow(item.id));
+          $("#update-" + item.id).click(() => updateRow(item.id));
+        });
+
+        $('#news').show();
+      }
+
+    });
+  </script>
+</head>
+
+<body>
+  <h1>News</h1>
+  <form>
+    <label for="category">Category:</label>
+    <select id="category">
+      <option value="All">All</option>
+      <option value="Health">Health</option>
+      <option value="Science">Science</option>
+      <option value="Sport">Sport</option>
+      <option value="Politics">Politics</option>
+      <option value="Society">Society</option>
+    </select>
+    <label for="start">Start date:</label>
+    <input id="start" type="date" value="1970-01-01" min="1970-01-01" max="2021-12-31">
+    <label for="end">End date:</label>
+    <input id="end" type="date" value="2021-12-31" min="1970-01-01" max="2021-12-31">
+    <input id="refresh" type="button" value="Load news" />
+  </form>
+
+  <div id="maindiv">
+    <table id="news" border="1">
+      <tr id="headers">
+        <th>Id</th>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Producer</th>
+        <th>Date</th>
+        <th>Category</th>
+      </tr>
+      <tbody>
+        <tr id="add-row">
+          <td />
+          <td><input id="add-title" type="text"></td>
+          <td><input id="add-text" type="text"></td>
+          <td><input id="add-producer" type="text"></td>
+          <td><input id="add-date" type="date"></td>
+          <td><input id="add-category" type="text"></td>
+          <td><input id="add" type="button" value="Add Row"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

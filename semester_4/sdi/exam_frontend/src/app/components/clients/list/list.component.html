@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div *ngIf="errorMessage">
+            {{errorMessage}}
+        </div>
+        <div class="">
+            <input #filterInput type="text" placeholder="Filter by name" style="margin-top: 50px;">
+            <button (click)="filter(filterInput.value)" class="btn btn-primary">Filter</button>
+        </div>
+        <table style="margin-top: 50px;">
+            <thead>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Is Business</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let client of clients">
+                    <th scope="row" #id>{{client.id}}</th>
+                    <td><input #name name="name" type="text" value="{{client.name}}"></td>
+                    <td><input #business name="business" type="checkbox" [checked]="client.isBusiness"></td>
+                    <td><button (click)="delete(id.innerText)">Delete</button>
+                        <button (click)="update(id.innerText, name.value, business.checked)">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" #id>#</th>
+                    <td><input #name name="name" type="text" value="" placeholder="Client name"></td>
+                    <td><input #business name="business" type="checkbox" [checked]="false"></td>
+                    <td>
+                        <button (click)="add(name.value, business.checked)" class="btn btn-primary">Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

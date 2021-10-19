@@ -1,0 +1,37 @@
+<div class="container">
+  <p>{{errorMessage}}</p>
+  <div class="row">
+    <div *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
+    <div class="">
+      <input #filterInput type="text" placeholder="Filter by name" style="margin-top: 50px;">
+      <button (click)="filter(filterInput.value)" class="btn btn-primary">Filter</button>
+    </div>
+    <table class="table">
+      <thead>
+        <th scope="col">Id</th>
+        <th scope="col">Username</th>
+        <th scope="col">Password</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of data">
+          <th scope="row" #id>{{user.id}}</th>
+          <td><input #username name="username" type="text" value="{{user.username}}"></td>
+          <td><input #password name="password" type="text" value="{{user.password}}"></td>
+          <td><button (click)="delete(id.innerText)">Delete</button>
+            <button (click)="update(id.innerText, username.value, password.value)">Update</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" #id>#</th>
+          <td><input #username name="username" type="text" value="" placeholder="Enter name"></td>
+          <td><input #password name="password" type="text" placeholder="Enter password"></td>
+          <td>
+            <button (click)="add(username.value, password.value)" class="btn btn-primary">Add</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

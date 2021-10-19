@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
+    <table class="table">
+      <thead>
+        <th scope="col">Id</th>
+        <th scope="col">User</th>
+        <th scope="col">Category</th>
+        <th scope="col">Description</th>
+        <th scope="col">Date</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let auction of data">
+          <th scope="row" #id>{{auction.id}}</th>
+          <td><input #user name="user" type="text" value="{{auction.user}}"></td>
+          <td><input #category name="category" type="text" value="{{auction.categoryId}}"></td>
+          <td><input #description name="description" type="text" value="{{auction.description}}"></td>
+          <td><input #date name="date" type="text" value="{{auction.date}}"></td>
+          <!-- <td><button (click)="delete(id.innerText)">Delete</button>
+            <button (click)="update(id.innerText, username.value, password.value)">Update</button>
+          </td> -->
+        </tr>
+        <!-- <tr>
+          <th scope="row" #id>#</th>
+          <td><input #username name="username" type="text" value="" placeholder="Enter name"></td>
+          <td><input #password name="password" type="text" placeholder="Enter password"></td>
+          <td>
+            <button (click)="add(username.value, password.value)" class="btn btn-primary">Add</button>
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+</div>

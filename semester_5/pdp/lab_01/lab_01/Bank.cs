@@ -8,8 +8,8 @@ namespace lab_01
 {
     public class Bank
     {
-        private const int ThreadsCount = 20;
-        private const int OperationsCount = 2000000;
+        private const int ThreadsCount = 2;
+        private const int OperationsCount = 1000000;
         private const int AccountsCount = 1000;
         private const int MinTransfer = 1;
         private const int MaxTransfer = 100;
